@@ -83,10 +83,34 @@ class App extends Component {
             <span>my work</span>
           </div>
           <div className="gallery">
-            <img src={coinwatch} alt="coinwatch" />
-            <img src={ichaty} alt="ichaty" />
-            <img src={moviespot} alt="mobiespot" />
-            <img src={bookworm} alt="bookworm" />
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://binancevol.herokuapp.com/"
+            >
+              <img src={coinwatch} alt="coinwatch" />
+            </a>
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://ichaty.herokuapp.com/"
+            >
+              <img src={ichaty} alt="ichaty" />
+            </a>
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://moonsky.herokuapp.com/"
+            >
+              <img src={moviespot} alt="mobiespot" />
+            </a>
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://ysrg.github.io/bookworm/"
+            >
+              <img src={bookworm} alt="bookworm" />
+            </a>
           </div>
         </div>
       </div>
