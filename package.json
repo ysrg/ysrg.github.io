@@ -8,7 +8,9 @@
   "dependencies": {
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
-    "react-icons": "^3.2.2"
+    "react-icons": "^3.2.2",
+    "react-on-images-loaded": "^2.1.9",
+    "react-spinkit": "^3.0.0"
   },
   "scripts": {
     "start": "react-scripts start",

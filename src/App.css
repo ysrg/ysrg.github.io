@@ -120,6 +120,17 @@ h2 > a:hover {
   color: rgb(68, 68, 68)
 }
 
+.spinner {
+  color: #353535;
+  z-index: 1;
+  margin: 20vh auto;
+  width: 100vw;
+  height: calc(100% - 50px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 @media (min-width: 575.98px) and (max-width: 1199.98px) {
   .content {
     width: 80%;
