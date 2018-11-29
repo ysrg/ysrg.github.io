@@ -1,10 +1,59 @@
+body {
+  background: #EFE7FC;
+}
+
 .App {
+  font-family:SFMono-Regular,Consolas,Liberation Mono,Menlo,Courier,monospace;
+}
+
+.content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* flex-direction: column; */
+  flex-wrap: wrap;
+  width: 87%;
+  margin: auto;
+}
+.content {
+  /* max-width: 50%; */
+  width: 50%;
+  margin: auto;
+}
+.gallery {
+  /* width: 62%; */
+  margin: 1em;
+}
+.gallery img {
+  max-width: 25%;
+}
+.about {
+  /* width: 500px; */
+  /* width: 60%; */
+  margin: 1em;
+  font-size: 1.5em;
+  align-self: flex-start;
+  word-wrap: break-word;
+  text-align: justify;
+}
+
+header {
   text-align: center;
+}
+header h1 {
+  font-weight: 900;
+  border-bottom: 5px solid;
+  width: 80px;
+  padding-bottom: 5px;
+  margin: 2em auto;
 }
 
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
+  /* height: 5vmin; */
+  height: 35px;
+  margin: .4em .8em;
+  max-width: 110px;
 }
 
 .App-header {
@@ -20,4 +69,87 @@
 
 .App-link {
   color: #61dafb;
+}
+
+.strike {
+  width: 100%;
+  display: block;
+  text-align: center;
+  overflow: hidden;
+  white-space: nowrap;
+  margin: 2em 1.5em 0;
+}
+
+.stack > .strike {
+  margin: 1em 0;
+}
+
+.strike > span {
+  position: relative;
+  display: inline-block;
+  color: #bbb6c3;
+}
+
+.strike > span:before,
+.strike > span:after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 9999px;
+  height: 1px;
+  background: #ddd7e6;
+}
+
+.strike > span:before {
+  right: 100%;
+  margin-right: 15px;
+}
+
+.strike > span:after {
+  left: 100%;
+  margin-left: 15px;
+}
+
+h2 > a {
+  margin: 0 1em;
+  color: #282c34
+}
+
+h2 > a:hover {
+  margin: 0 1em;
+  color: rgb(68, 68, 68)
+}
+
+@media (min-width: 575.98px) and (max-width: 1199.98px) {
+  .content {
+    width: 80%;
+  }
+
+  .App-logo {
+    height: 50px;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .content {
+    width: 100%;
+  }
+
+  .stack {
+    padding: 1em;
+  }
+
+  .App-logo {
+    height: 27px;
+    }
+  header h1 {
+    margin: 1em auto;
+  }
+  .about {
+    font-size: 1em;
+  }
+  .strike {
+    margin-top:0 !important;
+    font-size: .7em;
+  }
 }

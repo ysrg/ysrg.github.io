@@ -1,1 +1,1 @@
-<pre>personal page</pre>
+Personal page.
