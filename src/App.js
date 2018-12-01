@@ -61,7 +61,7 @@ class App extends Component {
           >
             <div className="content">
               <div className="about">
-                Hi, I'm Sergey and I am a full-stack engineer. I love coding,
+                Hi, I'm Sergey and I am a full-stack engineer. I enjoy coding,
                 reading, running and physics. I like simple-to-read code that is
                 easy to reason about. Personal preferences are paradigms that
                 enforce and promote composability. I often ponder over matters
