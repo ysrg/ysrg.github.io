@@ -1,7 +1,7 @@
 {
-  "main.css": "/static/css/main.d47fd4fe.chunk.css",
-  "main.js": "/static/js/main.9ba10de9.chunk.js",
-  "main.js.map": "/static/js/main.9ba10de9.chunk.js.map",
+  "main.css": "/static/css/main.bdcfa76e.chunk.css",
+  "main.js": "/static/js/main.bdb3ea29.chunk.js",
+  "main.js.map": "/static/js/main.bdb3ea29.chunk.js.map",
   "static/css/1.d0014465.chunk.css": "/static/css/1.d0014465.chunk.css",
   "static/js/1.383135a1.chunk.js": "/static/js/1.383135a1.chunk.js",
   "static/js/1.383135a1.chunk.js.map": "/static/js/1.383135a1.chunk.js.map",
@@ -23,9 +23,9 @@
   "static/media/logo-heroku.svg": "/static/media/logo-heroku.b38ff61a.svg",
   "static/media/coinwatch.png": "/static/media/coinwatch.33c78c37.png",
   "static/media/logo-graph.svg": "/static/media/logo-graph.5a4a847b.svg",
+  "static/css/main.bdcfa76e.chunk.css.map": "/static/css/main.bdcfa76e.chunk.css.map",
   "static/css/1.d0014465.chunk.css.map": "/static/css/1.d0014465.chunk.css.map",
-  "static/css/main.d47fd4fe.chunk.css.map": "/static/css/main.d47fd4fe.chunk.css.map",
   "index.html": "/index.html",
-  "precache-manifest.eb36d2a9d7810d3bf0f2eb0b7edfa0bb.js": "/precache-manifest.eb36d2a9d7810d3bf0f2eb0b7edfa0bb.js",
+  "precache-manifest.bfdbf78471c663eb7c14009fb984994c.js": "/precache-manifest.bfdbf78471c663eb7c14009fb984994c.js",
   "service-worker.js": "/service-worker.js"
 }
