@@ -4,7 +4,7 @@ self.__precacheManifest = [
     "url": "/static/media/logo-go.a52fa4f1.png"
   },
   {
-    "revision": "cc9ab2a07f394b96392a",
+    "revision": "54a4afda6cc1fabf9e53",
     "url": "/static/css/main.f3cdba50.chunk.css"
   },
   {
@@ -28,8 +28,8 @@ self.__precacheManifest = [
     "url": "/static/media/coinwatch-sm.800f5108.png"
   },
   {
-    "revision": "3377cba4848c6dc05a42bf0441469dd5",
-    "url": "/static/media/ichaty-sm.3377cba4.png"
+    "revision": "ad01d44cedb34bd95046c1d5f01e6d42",
+    "url": "/static/media/ichaty-sm.ad01d44c.png"
   },
   {
     "revision": "fc4491be0265317971f5e45975c6069f",
@@ -44,8 +44,8 @@ self.__precacheManifest = [
     "url": "/static/media/node-logo.89ccb090.svg"
   },
   {
-    "revision": "cc9ab2a07f394b96392a",
-    "url": "/static/js/main.cc9ab2a0.chunk.js"
+    "revision": "54a4afda6cc1fabf9e53",
+    "url": "/static/js/main.54a4afda.chunk.js"
   },
   {
     "revision": "dd60b11e9762b6e25f6d4ce981a1eeae",
@@ -84,7 +84,7 @@ self.__precacheManifest = [
     "url": "/static/css/1.d0014465.chunk.css"
   },
   {
-    "revision": "63d1d3d589439e25ab407a1108b2d84b",
+    "revision": "01448900c6b15f687496ce79703d1e87",
     "url": "/index.html"
   }
 ];
