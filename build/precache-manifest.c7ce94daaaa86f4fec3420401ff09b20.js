@@ -4,7 +4,7 @@ self.__precacheManifest = [
     "url": "/static/media/logo-go.a52fa4f1.png"
   },
   {
-    "revision": "54a4afda6cc1fabf9e53",
+    "revision": "f002f3d14c7e698f2e22",
     "url": "/static/css/main.f3cdba50.chunk.css"
   },
   {
@@ -24,28 +24,28 @@ self.__precacheManifest = [
     "url": "/static/media/logo.5d5d9eef.svg"
   },
   {
-    "revision": "800f510861f63eb677f6b68622caae0a",
-    "url": "/static/media/coinwatch-sm.800f5108.png"
+    "revision": "eb78f3e76e7276f32a33f86c5da5efe2",
+    "url": "/static/media/coinwatch-sm.eb78f3e7.png"
   },
   {
-    "revision": "ad01d44cedb34bd95046c1d5f01e6d42",
-    "url": "/static/media/ichaty-sm.ad01d44c.png"
+    "revision": "dd64ef1b60d88e03114192c83668f17f",
+    "url": "/static/media/ichaty-sm.dd64ef1b.png"
   },
   {
-    "revision": "fc4491be0265317971f5e45975c6069f",
-    "url": "/static/media/bookworm-sm.fc4491be.png"
+    "revision": "fb05bffa3abd78859206115732747e9a",
+    "url": "/static/media/bookworm-sm.fb05bffa.png"
   },
   {
-    "revision": "9c03cb81319454bde22f91516a041f9d",
-    "url": "/static/media/moviespot-sm.9c03cb81.png"
+    "revision": "547db1b3a689c9fd86ac42bd2f55d893",
+    "url": "/static/media/moviespot-sm.547db1b3.png"
   },
   {
     "revision": "89ccb09060a7adf788ea2340c54d6d78",
     "url": "/static/media/node-logo.89ccb090.svg"
   },
   {
-    "revision": "54a4afda6cc1fabf9e53",
-    "url": "/static/js/main.54a4afda.chunk.js"
+    "revision": "f002f3d14c7e698f2e22",
+    "url": "/static/js/main.f002f3d1.chunk.js"
   },
   {
     "revision": "dd60b11e9762b6e25f6d4ce981a1eeae",
@@ -84,7 +84,7 @@ self.__precacheManifest = [
     "url": "/static/css/1.d0014465.chunk.css"
   },
   {
-    "revision": "01448900c6b15f687496ce79703d1e87",
+    "revision": "5cae8fea48b130a775cb16d9422bb4ad",
     "url": "/index.html"
   }
 ];
