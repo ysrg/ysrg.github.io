@@ -1,7 +1,7 @@
 {
-  "main.css": "/static/css/main.1041c433.chunk.css",
-  "main.js": "/static/js/main.34eb15d5.chunk.js",
-  "main.js.map": "/static/js/main.34eb15d5.chunk.js.map",
+  "main.css": "/static/css/main.72cfa7ce.chunk.css",
+  "main.js": "/static/js/main.dd1af0fa.chunk.js",
+  "main.js.map": "/static/js/main.dd1af0fa.chunk.js.map",
   "static/css/1.3b84723b.chunk.css": "/static/css/1.3b84723b.chunk.css",
   "static/js/1.4844f6c0.chunk.js": "/static/js/1.4844f6c0.chunk.js",
   "static/js/1.4844f6c0.chunk.js.map": "/static/js/1.4844f6c0.chunk.js.map",
@@ -24,8 +24,8 @@
   "static/media/coinwatch-sm.png": "/static/media/coinwatch-sm.eb78f3e7.png",
   "static/media/logo-graph.svg": "/static/media/logo-graph.5a4a847b.svg",
   "static/css/1.3b84723b.chunk.css.map": "/static/css/1.3b84723b.chunk.css.map",
-  "static/css/main.1041c433.chunk.css.map": "/static/css/main.1041c433.chunk.css.map",
+  "static/css/main.72cfa7ce.chunk.css.map": "/static/css/main.72cfa7ce.chunk.css.map",
   "index.html": "/index.html",
-  "precache-manifest.c0e899ba4cff00c4f57648248d9878fb.js": "/precache-manifest.c0e899ba4cff00c4f57648248d9878fb.js",
+  "precache-manifest.f999a9fbc6373bdd63e1568847239135.js": "/precache-manifest.f999a9fbc6373bdd63e1568847239135.js",
   "service-worker.js": "/service-worker.js"
 }

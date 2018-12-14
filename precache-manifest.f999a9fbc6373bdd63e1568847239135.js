@@ -4,8 +4,8 @@ self.__precacheManifest = [
     "url": "/static/media/logo-go.a52fa4f1.png"
   },
   {
-    "revision": "34eb15d5156c5177f818",
-    "url": "/static/css/main.1041c433.chunk.css"
+    "revision": "dd1af0fa9d23a54e26aa",
+    "url": "/static/css/main.72cfa7ce.chunk.css"
   },
   {
     "revision": "5a4a847bcd232f4b3731bbfb9974f088",
@@ -44,8 +44,8 @@ self.__precacheManifest = [
     "url": "/static/media/node-logo.89ccb090.svg"
   },
   {
-    "revision": "34eb15d5156c5177f818",
-    "url": "/static/js/main.34eb15d5.chunk.js"
+    "revision": "dd1af0fa9d23a54e26aa",
+    "url": "/static/js/main.dd1af0fa.chunk.js"
   },
   {
     "revision": "dd60b11e9762b6e25f6d4ce981a1eeae",
@@ -84,7 +84,7 @@ self.__precacheManifest = [
     "url": "/static/css/1.3b84723b.chunk.css"
   },
   {
-    "revision": "cde71f9701e5f2cd0c68796744a3256b",
+    "revision": "14575aa89a9ca66340fd17438a38b9ef",
     "url": "/index.html"
   }
 ];
