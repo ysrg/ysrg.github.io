@@ -1,20 +1,10 @@
-body {
-  /* height: 100vh; */
-}
-
-html {
-  height: 100%;
-}
-body {
-  height: 100%;
-}
+html,
+body,
 #root,
 .App {
     height: 100%;
 }
-#root {
-  /* height: 100% */
-}
+
 .App {
   font-family:SFMono-Regular,Consolas,Liberation Mono,Menlo,Courier,monospace;
   /* height: 100%; */
@@ -64,7 +54,7 @@ body {
 
 header {
   text-align: center;
-  width: 50%;
+  /* width: 50%; */
   margin:auto;
 }
 header h1 {
@@ -188,9 +178,12 @@ h2 > a:hover {
     }
   header h1 {
     margin: 0 auto;
+    padding: 1em 0 0;
   }
   .about {
     font-size: 1em;
+    text-align: left;
+    line-height: 21px;
   }
   .strike {
     margin-top:0 !important;
