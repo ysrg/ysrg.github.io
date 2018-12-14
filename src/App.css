@@ -1,5 +1,34 @@
+body {
+  /* height: 100vh; */
+}
+
+html {
+  height: 100%;
+}
+body {
+  height: 100%;
+}
+#root,
+.App {
+    height: 100%;
+}
+#root {
+  /* height: 100% */
+}
 .App {
   font-family:SFMono-Regular,Consolas,Liberation Mono,Menlo,Courier,monospace;
+  /* height: 100%; */
+}
+
+.dark {
+  color: #dadada;
+}
+
+.tg-list-item {
+	display: flex;
+	align-items: center;
+  justify-content: center;
+  padding: .5em;
 }
 
 .content {
@@ -35,13 +64,14 @@
 
 header {
   text-align: center;
+  width: 50%;
+  margin:auto;
 }
 header h1 {
   font-weight: 900;
-  border-bottom: 5px solid;
   width: 80px;
-  padding-bottom: 5px;
-  margin: 2em auto;
+  padding: 2em 0 0;
+  margin: auto;
 }
 
 .App-logo {
@@ -137,7 +167,14 @@ h2 > a:hover {
   }
 }
 
+@media (max-width: 992px) {
+  body {
+    min-height: 100%;
+  }
+}
+
 @media (max-width: 575.98px) {
+
   .content {
     width: 100%;
   }
@@ -150,7 +187,7 @@ h2 > a:hover {
     height: 27px;
     }
   header h1 {
-    margin: 1em auto;
+    margin: 0 auto;
   }
   .about {
     font-size: 1em;
