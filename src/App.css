@@ -5,9 +5,13 @@ body,
     height: 100%;
 }
 
+@font-face {
+  font-family: 'ysrg-serif';
+  src: local('ysrg-serif'), url(./fonts/ysrg-serif.woff) format('woff');
+}
+
 .App {
-  font-family:SFMono-Regular,Consolas,Liberation Mono,Menlo,Courier,monospace;
-  /* height: 100%; */
+  font-family:ysrg-serif,SFMono-Regular,Consolas,Liberation Mono,Menlo,Courier,monospace;
 }
 
 .dark {
@@ -25,31 +29,27 @@ body,
   display: flex;
   align-items: center;
   justify-content: center;
-  /* flex-direction: column; */
   flex-wrap: wrap;
   width: 87%;
   margin: auto;
 }
 .content {
-  /* max-width: 50%; */
   width: 50%;
   margin: auto;
 }
 .gallery {
-  /* width: 62%; */
   margin: 1em;
 }
 .gallery img {
   max-width: 25%;
 }
 .about {
-  /* width: 500px; */
-  /* width: 60%; */
   margin: 1em;
-  font-size: 1.5em;
+  font-size: 1.7em;
   align-self: flex-start;
   word-wrap: break-word;
   text-align: justify;
+  line-height: 1.5em;
 }
 
 header {
