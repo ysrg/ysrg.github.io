@@ -102,7 +102,7 @@ class App extends Component {
                   you would like to hire me or just say hi, feel free to get in
                   touch with me{' '}
                   <span role="img" aria-label="waving">
-                    👋
+                    👋🏻
                   </span>
                   .
                 </div>
