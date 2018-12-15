@@ -1,7 +1,7 @@
 {
-  "main.css": "/static/css/main.985d94a4.chunk.css",
-  "main.js": "/static/js/main.2ad43a18.chunk.js",
-  "main.js.map": "/static/js/main.2ad43a18.chunk.js.map",
+  "main.css": "/static/css/main.d2788e83.chunk.css",
+  "main.js": "/static/js/main.c696dd31.chunk.js",
+  "main.js.map": "/static/js/main.c696dd31.chunk.js.map",
   "static/css/1.3b84723b.chunk.css": "/static/css/1.3b84723b.chunk.css",
   "static/js/1.4844f6c0.chunk.js": "/static/js/1.4844f6c0.chunk.js",
   "static/js/1.4844f6c0.chunk.js.map": "/static/js/1.4844f6c0.chunk.js.map",
@@ -24,9 +24,9 @@
   "static/media/logo-jest.svg": "/static/media/logo-jest.ea9cdc83.svg",
   "static/media/coinwatch-sm.png": "/static/media/coinwatch-sm.eb78f3e7.png",
   "static/media/App.css": "/static/media/ysrg-serif.2de9be49.woff",
+  "static/css/main.d2788e83.chunk.css.map": "/static/css/main.d2788e83.chunk.css.map",
   "static/css/1.3b84723b.chunk.css.map": "/static/css/1.3b84723b.chunk.css.map",
-  "static/css/main.985d94a4.chunk.css.map": "/static/css/main.985d94a4.chunk.css.map",
   "index.html": "/index.html",
-  "precache-manifest.b145c36af1a4aeb3755835c6ee0d2ce1.js": "/precache-manifest.b145c36af1a4aeb3755835c6ee0d2ce1.js",
+  "precache-manifest.2263c4852cf18dc9a9b2836211dcb976.js": "/precache-manifest.2263c4852cf18dc9a9b2836211dcb976.js",
   "service-worker.js": "/service-worker.js"
 }
