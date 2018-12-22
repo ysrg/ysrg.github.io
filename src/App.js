@@ -91,7 +91,10 @@ class App extends Component {
             >
               <div className="content">
                 <div className={`about ${this.state.theme.style}`}>
-                  Hi, I'm Sergey and I am a full-stack engineer. I enjoy coding,
+                  <span role="img" aria-label="waving">
+                    👋🏻
+                  </span>
+                  , I'm Sergey and I am a full-stack engineer. I enjoy coding,
                   reading, running and physics. I like simple-to-read code that
                   is easy to reason about. Personal preferences are paradigms
                   that enforce and promote composability. I often ponder over
@@ -100,11 +103,7 @@ class App extends Component {
                   measure the entropy of our universe. My biggest strength is
                   the ability to focus. I am the antithesis of multitasking. If
                   you would like to hire me or just say hi, feel free to get in
-                  touch with me{' '}
-                  <span role="img" aria-label="waving">
-                    👋🏻
-                  </span>
-                  .
+                  touch with me.
                 </div>
                 <div className="stack">
                   <div className="strike">
