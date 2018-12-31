@@ -105,27 +105,8 @@ class App extends Component {
                   you would like to hire me or just say hi, feel free to get in
                   touch with me.
                 </div>
-                <div className="stack">
-                  <div className="strike">
-                    <span>tech stack</span>
-                  </div>
-                  <div style={{ textAlign: 'center' }}>
-                    <img src={go} className="App-logo" alt="logo" />
-                    <img src={js} className="App-logo" alt="js" />
-                    <img src={node} className="App-logo" alt="logo" />
-                    <img src={aws} className="App-logo" alt="aws" />
-                    <img src={heroku} className="App-logo" alt="heroku" />
-                    <img src={firebase} className="App-logo" alt="firebase" />
-                    <img src={graph} className="App-logo" alt="graph" />
-                    <img src={logo} className="App-logo" alt="logo" />
-                    <img src={redux} className="App-logo" alt="redux" />
-                    <img src={mongo} className="App-logo" alt="mongo" />
-                    <img src={babel} className="App-logo" alt="babel" />
-                    <img src={jest} className="App-logo" alt="jest" />
-                  </div>
-                </div>
                 <div className="strike">
-                  <span>my work</span>
+                  <span>some of my work</span>
                 </div>
                 <div className="gallery">
                   <a
@@ -156,6 +137,25 @@ class App extends Component {
                   >
                     <img src={bookworm} alt="bookworm" />
                   </a>
+                </div>
+                <div className="stack">
+                  <div className="strike">
+                    <span>tech I am familiar with</span>
+                  </div>
+                  <div style={{ textAlign: 'center' }}>
+                    <img src={go} className="App-logo" alt="logo" />
+                    <img src={js} className="App-logo" alt="js" />
+                    <img src={node} className="App-logo" alt="logo" />
+                    <img src={aws} className="App-logo" alt="aws" />
+                    <img src={heroku} className="App-logo" alt="heroku" />
+                    <img src={firebase} className="App-logo" alt="firebase" />
+                    <img src={graph} className="App-logo" alt="graph" />
+                    <img src={logo} className="App-logo" alt="logo" />
+                    <img src={redux} className="App-logo" alt="redux" />
+                    <img src={mongo} className="App-logo" alt="mongo" />
+                    <img src={babel} className="App-logo" alt="babel" />
+                    <img src={jest} className="App-logo" alt="jest" />
+                  </div>
                 </div>
               </div>
             </OnImagesLoaded>

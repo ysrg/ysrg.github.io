@@ -90,7 +90,7 @@ header h1 {
 .strike {
   width: 100%;
   display: block;
-  text-align: center;
+  text-align: left;
   overflow: hidden;
   white-space: nowrap;
   margin: 2em 1.5em 0;
