@@ -140,7 +140,7 @@ class App extends Component {
                 </div>
                 <div className="stack">
                   <div className="strike">
-                    <span>tech I am familiar with</span>
+                    <span>technologies I know</span>
                   </div>
                   <div style={{ textAlign: 'center' }}>
                     <img src={go} className="App-logo" alt="logo" />
