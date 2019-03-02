@@ -45,12 +45,13 @@ body,
 }
 .about {
   margin: 1em;
-  font-size: 1.5em;
-  font-weight: 300;
+  font-size: 1.2em;
+  /* font-weight: 300;
   align-self: flex-start;
   word-wrap: break-word;
-  text-align: justify;
-  line-height: 1.5em;
+  text-align: justify; */
+  white-space: normal;
+  line-height: 1.2em;
 }
 
 header {

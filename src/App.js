@@ -38,6 +38,17 @@ class App extends Component {
   };
 
   render() {
+    var title =  String.raw`
+    +---------------------------------------------------------------------------------+
+    | Hi, I'm Sergey and I am a full-stack engineer. I enjoy coding, reading, running |
+    | and physics. I like simple-to-read code that is easy to reason about. Personal  |
+    | preferences are paradigms that enforce and promote composability. I often       |
+    | ponder over matters such as the approaching technological singularity or the    |
+    | probability that time is just an illusion we use to measure the entropy of our  |
+    | universe. My biggest strength is the ability to focus. I am the antithesis of   |
+    | multitasking. If you would like to hire me or just say hi, get in touch with me.|
+    +---------------------------------------------------------------------------------+
+    `
     var hiddenStyle = { height: 0, overflow: 'hidden' };
     var visibleStyle = {};
     return (
@@ -91,10 +102,14 @@ class App extends Component {
             >
               <div className="content">
                 <div className={`about ${this.state.theme.style}`}>
+
+              <pre>
+                {title}
+              </pre>
                   <span role="img" aria-label="waving">
                     👋🏻
                   </span>
-                  , I'm Sergey and I am a full-stack engineer. I enjoy coding,
+                  {/* , I'm Sergey and I am a full-stack engineer. I enjoy coding,
                   reading, running and physics. I like simple-to-read code that
                   is easy to reason about. Personal preferences are paradigms
                   that enforce and promote composability. I often ponder over
@@ -103,7 +118,7 @@ class App extends Component {
                   measure the entropy of our universe. My biggest strength is
                   the ability to focus. I am the antithesis of multitasking. If
                   you would like to hire me or just say hi, feel free to get in
-                  touch with me.
+                  touch with me. */}
                 </div>
                 <div className="strike">
                   <span>some of my work</span>
