@@ -1,19 +1,19 @@
 self.__precacheManifest = [
   {
-    "revision": "a52fa4f17f74cdef6a95b07adae8f87d",
-    "url": "/static/media/logo-go.a52fa4f1.png"
+    "revision": "5ae1af16ffc2f55bd739da81176302e9",
+    "url": "/static/media/logo-redux.5ae1af16.svg"
   },
   {
-    "revision": "5f159541c5f6ee4f87c1",
-    "url": "/static/css/main.add7904e.chunk.css"
+    "revision": "adc8ee578d2168c10833",
+    "url": "/static/css/main.9b79e0e2.chunk.css"
   },
   {
     "revision": "2de9be49b99badc6478b5bedf358bd9f",
     "url": "/static/media/ysrg-serif.2de9be49.woff"
   },
   {
-    "revision": "a15c13bfab93baf36ec2",
-    "url": "/static/js/1.a15c13bf.chunk.js"
+    "revision": "dd6aa4af795d79eaa4f0",
+    "url": "/static/js/1.dd6aa4af.chunk.js"
   },
   {
     "revision": "229c360febb4351a89df",
@@ -24,28 +24,12 @@ self.__precacheManifest = [
     "url": "/static/media/logo.5d5d9eef.svg"
   },
   {
-    "revision": "eb78f3e76e7276f32a33f86c5da5efe2",
-    "url": "/static/media/coinwatch-sm.eb78f3e7.png"
-  },
-  {
-    "revision": "dd64ef1b60d88e03114192c83668f17f",
-    "url": "/static/media/ichaty-sm.dd64ef1b.png"
-  },
-  {
-    "revision": "fb05bffa3abd78859206115732747e9a",
-    "url": "/static/media/bookworm-sm.fb05bffa.png"
-  },
-  {
-    "revision": "547db1b3a689c9fd86ac42bd2f55d893",
-    "url": "/static/media/moviespot-sm.547db1b3.png"
-  },
-  {
     "revision": "89ccb09060a7adf788ea2340c54d6d78",
     "url": "/static/media/node-logo.89ccb090.svg"
   },
   {
-    "revision": "5f159541c5f6ee4f87c1",
-    "url": "/static/js/main.5f159541.chunk.js"
+    "revision": "a52fa4f17f74cdef6a95b07adae8f87d",
+    "url": "/static/media/logo-go.a52fa4f1.png"
   },
   {
     "revision": "dd60b11e9762b6e25f6d4ce981a1eeae",
@@ -56,16 +40,12 @@ self.__precacheManifest = [
     "url": "/static/media/logo-aws.259e1339.svg"
   },
   {
-    "revision": "2aa7f7b569fd6e9176f49dd31eaa970e",
-    "url": "/static/media/logo-mongo.2aa7f7b5.svg"
-  },
-  {
     "revision": "bfa69c4f3255d5c564c2ec600ff9885e",
     "url": "/static/media/logo-firebase.bfa69c4f.svg"
   },
   {
-    "revision": "5ae1af16ffc2f55bd739da81176302e9",
-    "url": "/static/media/logo-redux.5ae1af16.svg"
+    "revision": "adc8ee578d2168c10833",
+    "url": "/static/js/main.adc8ee57.chunk.js"
   },
   {
     "revision": "d255e75f6f38e21bc5b17f296248339c",
@@ -84,11 +64,31 @@ self.__precacheManifest = [
     "url": "/static/media/logo-graph.5a4a847b.svg"
   },
   {
-    "revision": "a15c13bfab93baf36ec2",
-    "url": "/static/css/1.56f7bc87.chunk.css"
+    "revision": "eb78f3e76e7276f32a33f86c5da5efe2",
+    "url": "/static/media/coinwatch-sm.eb78f3e7.png"
   },
   {
-    "revision": "9517555d214a7fafd0153239f9d89e96",
+    "revision": "dd64ef1b60d88e03114192c83668f17f",
+    "url": "/static/media/ichaty-sm.dd64ef1b.png"
+  },
+  {
+    "revision": "fb05bffa3abd78859206115732747e9a",
+    "url": "/static/media/bookworm-sm.fb05bffa.png"
+  },
+  {
+    "revision": "547db1b3a689c9fd86ac42bd2f55d893",
+    "url": "/static/media/moviespot-sm.547db1b3.png"
+  },
+  {
+    "revision": "2aa7f7b569fd6e9176f49dd31eaa970e",
+    "url": "/static/media/logo-mongo.2aa7f7b5.svg"
+  },
+  {
+    "revision": "dd6aa4af795d79eaa4f0",
+    "url": "/static/css/1.5f5b97d1.chunk.css"
+  },
+  {
+    "revision": "fb07e4d044af380d2de60892d8948a18",
     "url": "/index.html"
   }
 ];
