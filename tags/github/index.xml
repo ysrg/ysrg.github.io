@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>GitHub on Sergey Moraru</title>
+    <link>http://example.org/tags/github/</link>
+    <description>Recent content in GitHub on Sergey Moraru</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 04 Sep 2019 05:42:10 +0300</lastBuildDate>
+    
+	<atom:link href="http://example.org/tags/github/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Javascript Closures</title>
+      <link>http://example.org/posts/javascript-closures/</link>
+      <pubDate>Wed, 04 Sep 2019 05:42:10 +0300</pubDate>
+      
+      <guid>http://example.org/posts/javascript-closures/</guid>
+      <description>Closures are all around in our code, you just need to recognize and leverage them. They happen as a result of writing code that relies heavily on lexical scope. *A closure is a function that is able to remember and access its surrounding lexical scope even when that function is executing outside its lexical scope.* Closures are a neat way of dealing with the following two realities of JavaScript: * Scope is at the function level, not the block level * Much of what you do in practice in JavaScript is asynchronous/event driven so there is a need to remember the scope of authored-time function declarations.</description>
+    </item>
+    
+  </channel>
+</rss>

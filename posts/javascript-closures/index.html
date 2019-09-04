@@ -1,0 +1,112 @@
+<div id="container">
+
+    <!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+
+        <title>Javascript Closures</title>
+
+        <link rel="stylesheet" href="/css/stylesheet.css">
+        <link rel="stylesheet" href="../../../../static/css/syntax.css">
+    </head>
+    <body>
+        <header id="page-title">
+            <h1><a href="/">[Sergey Moraru]</a></h1>
+        </header>
+
+
+
+    <article id="content">
+        <header>
+            <h1>Javascript Closures</h1>
+            <p class="blog-post-subheader">
+                Published on  September 4, 2019
+            </p>
+        </header>
+        <div class="blog-post-content">
+            <p>Closures are all around in our code, you just need to recognize and leverage them. They happen as a result of writing code that relies heavily on lexical scope. *A <strong>closure</strong> is a function that is able to remember and access its surrounding lexical scope even when that function is executing outside its lexical scope.* Closures are a neat way of dealing with the following two realities of JavaScript:
+* Scope is at the function level, not the block level
+* Much of what you do in practice in JavaScript is asynchronous/event driven so there is a need to remember the scope of authored-time function declarations.</p>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#008000;font-weight:bold">function</span> name() {
+	<span style="color:#008000;font-weight:bold">var</span> me <span style="color:#666">=</span> john;
+	<span style="color:#008000;font-weight:bold">function</span> logName() {
+		console.log(me);
+	}
+	<span style="color:#008000;font-weight:bold">return</span> me;
+}
+<span style="color:#008000;font-weight:bold">var</span> globalLog <span style="color:#666">=</span> name();
+globalLog(); <span style="color:#408080;font-style:italic">// john
+</span></code></pre></div>
+<p>Function <code>logName</code> has a closure(or <em>closes</em>) over the scope of <code>name</code> (and global scope as well) simply because it appears nested inside of <code>name</code>.  We execute <code>logName</code> outside the authored-time lexical scope by a different identifier reference. You’d expect the <em>Garbage Collector</em> to come along and free up memory after the <code>name()</code>  gets executed, but given that <code>logName</code> still uses the scope of  <code>name</code>  you’ll still have access to the <code>name</code> scope.
+Goin further, anywhere you see functions passed around as values and invoked in other locations — you can observe closures.</p>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#008000;font-weight:bold">function</span> name() {
+	<span style="color:#008000;font-weight:bold">var</span> me <span style="color:#666">=</span> john;
+	<span style="color:#008000;font-weight:bold">function</span> logName() {
+		console.log(me); <span style="color:#408080;font-style:italic">//john
+</span><span style="color:#408080;font-style:italic"></span>	}
+	globalLog(logName);
+}
+<span style="color:#008000;font-weight:bold">function</span> globalLog(fn) {
+	fn(); <span style="color:#408080;font-style:italic">//closure
+</span><span style="color:#408080;font-style:italic"></span>}
+</code></pre></div>
+<p>Most common example to illustrate closure involves the <code>for</code> loop.</p>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#008000;font-weight:bold">p</span> <span style="color:#7d9029">id</span><span style="color:#666">=</span><span style="color:#ba2121">&#34;help&#34;</span>&gt;Helpful notes will appear here&lt;/<span style="color:#008000;font-weight:bold">p</span>&gt;
+&lt;<span style="color:#008000;font-weight:bold">p</span>&gt;E-mail: &lt;<span style="color:#008000;font-weight:bold">input</span> <span style="color:#7d9029">type</span><span style="color:#666">=</span><span style="color:#ba2121">&#34;text&#34;</span> <span style="color:#7d9029">id</span><span style="color:#666">=</span><span style="color:#ba2121">&#34;email&#34;</span> <span style="color:#7d9029">name</span><span style="color:#666">=</span><span style="color:#ba2121">&#34;email&#34;</span>&gt;&lt;/<span style="color:#008000;font-weight:bold">p</span>&gt;
+&lt;<span style="color:#008000;font-weight:bold">p</span>&gt;Name: &lt;<span style="color:#008000;font-weight:bold">input</span> <span style="color:#7d9029">type</span><span style="color:#666">=</span><span style="color:#ba2121">&#34;text&#34;</span> <span style="color:#7d9029">id</span><span style="color:#666">=</span><span style="color:#ba2121">&#34;name&#34;</span> <span style="color:#7d9029">name</span><span style="color:#666">=</span><span style="color:#ba2121">&#34;name&#34;</span>&gt;&lt;/<span style="color:#008000;font-weight:bold">p</span>&gt;
+&lt;<span style="color:#008000;font-weight:bold">p</span>&gt;Age: &lt;<span style="color:#008000;font-weight:bold">input</span> <span style="color:#7d9029">type</span><span style="color:#666">=</span><span style="color:#ba2121">&#34;text&#34;</span> <span style="color:#7d9029">id</span><span style="color:#666">=</span><span style="color:#ba2121">&#34;age&#34;</span> <span style="color:#7d9029">name</span><span style="color:#666">=</span><span style="color:#ba2121">&#34;age&#34;</span>&gt;&lt;/<span style="color:#008000;font-weight:bold">p</span>&gt;</code></pre></div><div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#008000;font-weight:bold">function</span> showHelp(help) {
+  <span style="color:#008000">document</span>.getElementById(<span style="color:#ba2121">&#39;help&#39;</span>).innerHTML <span style="color:#666">=</span> help;
+}
+
+<span style="color:#008000;font-weight:bold">function</span> setupHelp() {
+  <span style="color:#008000;font-weight:bold">var</span> helpText <span style="color:#666">=</span> [
+      {<span style="color:#ba2121">&#39;id&#39;</span><span style="color:#666">:</span> <span style="color:#ba2121">&#39;email&#39;</span>, <span style="color:#ba2121">&#39;help&#39;</span><span style="color:#666">:</span> <span style="color:#ba2121">&#39;Your e-mail address&#39;</span>},
+      {<span style="color:#ba2121">&#39;id&#39;</span><span style="color:#666">:</span> <span style="color:#ba2121">&#39;name&#39;</span>, <span style="color:#ba2121">&#39;help&#39;</span><span style="color:#666">:</span> <span style="color:#ba2121">&#39;Your full name&#39;</span>},
+      {<span style="color:#ba2121">&#39;id&#39;</span><span style="color:#666">:</span> <span style="color:#ba2121">&#39;age&#39;</span>, <span style="color:#ba2121">&#39;help&#39;</span><span style="color:#666">:</span> <span style="color:#ba2121">&#39;Your age (you must be over 16)&#39;</span>}
+    ];
+
+  <span style="color:#008000;font-weight:bold">for</span> (<span style="color:#008000;font-weight:bold">var</span> i <span style="color:#666">=</span> <span style="color:#666">0</span>; i <span style="color:#666">&lt;</span> helpText.length; i<span style="color:#666">++</span>) {
+    <span style="color:#008000;font-weight:bold">var</span> item <span style="color:#666">=</span> helpText[i];
+    <span style="color:#008000">document</span>.getElementById(item.id).onfocus <span style="color:#666">=</span> <span style="color:#008000;font-weight:bold">function</span>() {
+      showHelp(item.help);
+    }
+  }
+  console.log(<span style="color:#ba2121">&#39;outside&#39;</span>,i);
+}
+setupHelp();
+</code></pre></div>
+<p>Given that that there is no true block scoping in JS (<code>let</code> and <code>const</code> aside), the above code will not work as expected because the <code>i</code> variable in the loop head is not scoped to the loop body, but rather to the <code>setupHelp</code> function scope. So, when the loop creates three closures, by the time you focus an input, the loop would already have been run and the <code>i</code> would have been bound to the last value in the array. The problem is that we need scope for each iteration. One solutions would be to pass each variable iteration inside the loop and refer it within an IIFE —</p>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#008000;font-weight:bold">for</span> (<span style="color:#008000;font-weight:bold">var</span> i <span style="color:#666">=</span> <span style="color:#666">0</span>; i <span style="color:#666">&lt;</span> helpText.length; i<span style="color:#666">++</span>) {
+    (<span style="color:#008000;font-weight:bold">function</span> text(j) {
+		<span style="color:#008000;font-weight:bold">var</span> item <span style="color:#666">=</span> helpText[j];
+    	<span style="color:#008000">document</span>.getElementById(item.id).onfocus <span style="color:#666">=</span> <span style="color:#008000;font-weight:bold">function</span>() {
+      	showHelp(item.help);
+    	}
+	  })(i)
+  }
+</code></pre></div>
+<p>The use of an IIFE inside each iteration created a new scope for each iteration, which gave our function <code>text</code> callbacks the opportunity to close over a new scope for each iteration, one which had a variable with the right per-iteration value in it for us to access.
+Another way is to declare the variable in the loop head using <code>let</code>. As you probably know, <code>let</code> hijacks the block scope and makes the variable accessible just in the said block. It essentially turns a block into a scope that we can close over and declares the <code>var i</code> on each iteration with the value from the end of previous iteration.</p>
+
+<hr />
+
+<p><br/>
+Read more:</p>
+
+<ul>
+<li><a href="https://github.com/getify/You-Dont-Know-JS/tree/master/scope%20%26%20closures">YDKJS on GitHub</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures">Closures - MDN</a></li>
+<li><a href="https://stackoverflow.com/questions/111102/how-do-javascript-closures-work">How closures work? - SO</a></li>
+<li><a href="https://stackoverflow.com/questions/750486/javascript-closure-inside-loops-simple-practical-example">Closures inside loops - SO</a></li>
+</ul>
+
+        </div>
+    </article>
+
+        </body>
+</html>
+</div>
