@@ -56,7 +56,7 @@ h2, h3, h4, h5, h6 {
 
 #content {
     flex-grow: 1;
-    max-width: calc(85% - 8rem);
+    max-width: calc(100% - 8rem);
     padding: 1rem;
 }
 
@@ -274,6 +274,7 @@ pre[class*="chroma"]
 }
 .blog-post-content {
     font-family: 'Open Sans', sans-serif;
+    max-width: calc(100% - 8rem);
     line-height: 24px;
 }
 :not(pre) > code {
