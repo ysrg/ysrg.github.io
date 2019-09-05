@@ -85,13 +85,13 @@ setupHelp();
 </code></pre></div>
 <p>Given that that there is no true block scoping in JS (<code>let</code> and <code>const</code> aside), the above code will not work as expected because the <code>i</code> variable in the loop head is not scoped to the loop body, but rather to the <code>setupHelp</code> function scope. So, when the loop creates three closures, by the time you focus an input, the loop would already have been run and the <code>i</code> would have been bound to the last value in the array. The problem is that we need scope for each iteration. One solutions would be to pass each variable iteration inside the loop and refer it within an IIFE —</p>
 <div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#008000;font-weight:bold">for</span> (<span style="color:#008000;font-weight:bold">var</span> i <span style="color:#666">=</span> <span style="color:#666">0</span>; i <span style="color:#666">&lt;</span> helpText.length; i<span style="color:#666">++</span>) {
-    (<span style="color:#008000;font-weight:bold">function</span> text(j) {
-		<span style="color:#008000;font-weight:bold">var</span> item <span style="color:#666">=</span> helpText[j];
-    	<span style="color:#008000">document</span>.getElementById(item.id).onfocus <span style="color:#666">=</span> <span style="color:#008000;font-weight:bold">function</span>() {
-      	showHelp(item.help);
-    	}
-	  })(i)
-  }
+  (<span style="color:#008000;font-weight:bold">function</span> text(j) {
+    <span style="color:#008000;font-weight:bold">var</span> item <span style="color:#666">=</span> helpText[j];
+    <span style="color:#008000">document</span>.getElementById(item.id).onfocus <span style="color:#666">=</span> <span style="color:#008000;font-weight:bold">function</span>() {
+      showHelp(item.help);
+    }
+  })(i)
+}
 </code></pre></div>
 <p>The use of an IIFE inside each iteration created a new scope for each iteration, which gave our function <code>text</code> callbacks the opportunity to close over a new scope for each iteration, one which had a variable with the right per-iteration value in it for us to access.
 Another way is to declare the variable in the loop head using <code>let</code>. As you probably know, <code>let</code> hijacks the block scope and makes the variable accessible just in the said block. It essentially turns a block into a scope that we can close over and declares the <code>var i</code> on each iteration with the value from the end of previous iteration.
