@@ -53,8 +53,13 @@
   </url>
   
   <url>
-    <loc>https://ysrg.github.io/posts/js-this/</loc>
+    <loc>https://ysrg.github.io/posts/understand-this/</loc>
     <lastmod>2019-09-02T05:42:10+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ysrg.github.io/about/</loc>
+    <priority>0</priority>
   </url>
   
 </urlset>

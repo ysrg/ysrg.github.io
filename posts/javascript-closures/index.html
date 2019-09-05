@@ -95,6 +95,7 @@ setupHelp();
 </code></pre></div>
 <p>The use of an IIFE inside each iteration created a new scope for each iteration, which gave our function <code>text</code> callbacks the opportunity to close over a new scope for each iteration, one which had a variable with the right per-iteration value in it for us to access.
 Another way is to declare the variable in the loop head using <code>let</code>. As you probably know, <code>let</code> hijacks the block scope and makes the variable accessible just in the said block. It essentially turns a block into a scope that we can close over and declares the <code>var i</code> on each iteration with the value from the end of previous iteration.
+<br/>
 <br/></p>
 
 <hr />

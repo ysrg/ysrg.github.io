@@ -24,7 +24,7 @@ h2, h3, h4, h5, h6 {
 
 #container {
     display: flex;
-    margin: 1rem 20%;
+    margin: 1rem 20% 3rem;
 }
 
 #page-title {
@@ -106,6 +106,7 @@ h2, h3, h4, h5, h6 {
 
 #grid .col {
     background-color: #f6f6f6;
+    border: 1px solid #cacaca5c;
     flex-grow: 1;
     margin: 0 3rem 2rem 0;
     padding: 1rem 2rem;
@@ -120,7 +121,7 @@ h2, h3, h4, h5, h6 {
 #grid .links {
     align-items: center;
     background-color: transparent;
-    border: 1px solid #cacaca;
+    /* border: 1px solid #cacaca; */
     width: 50%;
 }
 
@@ -268,7 +269,7 @@ pre[class*="chroma"]
 }
 .blog-post-content {
     font-family: 'Open Sans', sans-serif;
-    line-height: 22px;
+    line-height: 24px;
 }
 :not(pre) > code {
     font-size: 85%;
