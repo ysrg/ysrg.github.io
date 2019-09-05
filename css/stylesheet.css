@@ -65,11 +65,12 @@ body {
 }
 
 #content h1:first-of-type {
-    margin-top: 0;
+    margin-top: -10px;
 }
 
 #content h1 {
     font-size: 2rem;
+    font-family: 'Open Sans', sans-serif;
 }
 
 #content h1 + .blog-post-subheader {
