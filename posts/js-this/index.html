@@ -67,44 +67,49 @@ foo(); <span style="color:#408080;font-style:italic">//3
 </span><span style="color:#408080;font-style:italic"></span>console.log( x ); <span style="color:#408080;font-style:italic">// 1
 </span></code></pre></div>
 <p>To avoid polluting the enclosing scope (global one here specifically) by declaring the function and later when we invoke it, we can refactor the function declaration in a immediate invoked function expression (IIFE) —</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4">var x = 1;
-(function foo(){
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#008000;font-weight:bold">var</span> x <span style="color:#666">=</span> <span style="color:#666">1</span>;
+(<span style="color:#008000;font-weight:bold">function</span> foo(){
 
-    var x = 3;
-    console.log( x ); //3
-
+    <span style="color:#008000;font-weight:bold">var</span> x <span style="color:#666">=</span> <span style="color:#666">3</span>;
+    console.log( x ); <span style="color:#408080;font-style:italic">//3
+</span><span style="color:#408080;font-style:italic"></span>
 })();
-console.log( x ); // 1</pre></div>
+console.log( x ); <span style="color:#408080;font-style:italic">// 1
+</span></code></pre></div>
 <p>Here, the name <code>foo</code> is not bound to enclosing (global) scope, but instead — to its own function. The braces that wraps the function declaration actually transforms it in a function expressions and adding a pair of  <code>()</code> at the end — invokes it immediately. The most common form of IIFEs is to use an anonymous function expression, but it is recommended to name them as it is easier to debug (the name appears in stack traces), can call itself when necessary(eg recursion) , and all in all makes the code more readable.
 Another variation on IIFE&rsquo;s which is quite common is to use the fact that they are just function calls, and pass in argument(s). For instance:</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4">var a = 2;
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#008000;font-weight:bold">var</span> a <span style="color:#666">=</span> <span style="color:#666">2</span>;
 
-(function IIFE( global ){
+(<span style="color:#008000;font-weight:bold">function</span> IIFE( global ){
 
-    var a = 3;
-    console.log( a ); // 3
-    console.log( global.a ); // 2
-
-})( window );</pre></div>
+    <span style="color:#008000;font-weight:bold">var</span> a <span style="color:#666">=</span> <span style="color:#666">3</span>;
+    console.log( a ); <span style="color:#408080;font-style:italic">// 3
+</span><span style="color:#408080;font-style:italic"></span>    console.log( global.a ); <span style="color:#408080;font-style:italic">// 2
+</span><span style="color:#408080;font-style:italic"></span>
+})( <span style="color:#008000">window</span> );
+</code></pre></div>
 <h3 id="blocks-as-scopes">Blocks as Scopes.</h3>
 
 <p>While functions are the most common unit of scope, and certainly the most wide-spread of the design approaches in the majority of JS in circulation, other units of scope are possible, and the usage of these other scope units can lead to even better, cleaner to maintain code. Javascript, unlike other  languages, doesn’t support the pure Block Scope per se. Take this example —</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4">for (var i=0; i&lt;10; i++) {
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#008000;font-weight:bold">for</span> (<span style="color:#008000;font-weight:bold">var</span> i<span style="color:#666">=</span><span style="color:#666">0</span>; i<span style="color:#666">&lt;</span><span style="color:#666">10</span>; i<span style="color:#666">++</span>) {
     console.log( i );
-}</pre></div>
+}
+</code></pre></div>
 <p>We would assume that we use the variable <code>i</code> explicitly in the loop context, but it actually scopes in enclosing scope (function or global). Fortunately, ES6 introduces a new keyword <code>let</code> which acts as another way to declare variables. The <code>let</code> keyword attaches the variable declaration to whatever block (<code>{}</code>) it’s contained in, it hijacks any block scope for its variable declaration.</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4">var foo = 1;
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#008000;font-weight:bold">var</span> foo <span style="color:#666">=</span> <span style="color:#666">1</span>;
 
-if (foo === 1) {
-    let bar = foo * 2;
+<span style="color:#008000;font-weight:bold">if</span> (foo <span style="color:#666">===</span> <span style="color:#666">1</span>) {
+    <span style="color:#008000;font-weight:bold">let</span> bar <span style="color:#666">=</span> foo <span style="color:#666">*</span> <span style="color:#666">2</span>;
     console.log( bar );
 };
-console.log( bar ); // ReferenceError</pre></div>
+console.log( bar ); <span style="color:#408080;font-style:italic">// ReferenceError
+</span></code></pre></div>
 <p>It is worth mentioning that <code>let</code> declaration are not hoisted at the top of the block they appear in, so if you use them before declaring you will get a <code>ReferenceError</code>.</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4">{
-   console.log( foo ); // ReferenceError!
-   let foo = 	1;
-}</pre></div>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">{
+   console.log( foo ); <span style="color:#408080;font-style:italic">// ReferenceError!
+</span><span style="color:#408080;font-style:italic"></span>   <span style="color:#008000;font-weight:bold">let</span> foo <span style="color:#666">=</span> 	<span style="color:#666">1</span>;
+}
+</code></pre></div>
 <p>A quick mention about block scope in context of garbage collection. We will talk about closures in another post, but in two words — a closure is a function’s ability to remember it enclosing scope even after it has run. So, the outer scope of that function is retained for this reason and is not garbage collected because it can still be used by some functions. Here comes the block scoping and it can help reclaim memory by allowing itself being garbage collected.  Consider this —</p>
 <div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#008000;font-weight:bold">function</span> doSomething() {
 	<span style="color:#408080;font-style:italic">//it has a closure on its outer scope

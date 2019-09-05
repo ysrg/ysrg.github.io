@@ -18,6 +18,10 @@ body {
     margin: auto;
 }
 
+h2, h3, h4, h5, h6 {
+    margin: 1em 0 .6em;
+}
+
 #container {
     display: flex;
     margin: 1rem 20%;
