@@ -21,5 +21,15 @@
  Scope is at the function level, not the block level Much of what you do in practice in JavaScript is asynchronous/event driven so there is a need to remember the scope of authored-time function declarations.</description>
     </item>
     
+    <item>
+      <title>`this` in Javascript</title>
+      <link>https://ysrg.github.io/posts/js-this/</link>
+      <pubDate>Mon, 02 Sep 2019 05:42:10 +0300</pubDate>
+      
+      <guid>https://ysrg.github.io/posts/js-this/</guid>
+      <description>Scope in Javascript is a set of rules that determines how and where a variable(identifier) can be looked up.
+A brief refresher. To understand scope, you need to be familiar with some basics of how Javascript (or any other programming language, really) works. Unlike other languages out there, Javascript code is compiled right before (like &amp;lt; 1ms) execution, which is crazy fast. The main parts of this process are: 1.</description>
+    </item>
+    
   </channel>
 </rss>
