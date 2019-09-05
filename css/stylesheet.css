@@ -344,6 +344,7 @@ li > a {
     .single {
         width: 90%;
         margin: auto;
+        margin-bottom: 2em;
     }
     pre > code {
         font-size: 65%;
