@@ -315,7 +315,7 @@ li > a {
         transform: none;
     }
     #content {
-        max-width: initial;
+        max-width: 100%;
         padding: 0;
     }
     #grid .cv {
@@ -334,5 +334,17 @@ li > a {
     }
     .col.about {
         font-size: .8em;
+    }
+    #content h1:first-of-type {
+        margin: .8em 0 1.5em;
+        font-size: 1.5em;
+        line-height: 1em;
+    }
+    .blog-post-content {
+        max-width: 100%;
+    }
+    .single {
+        width: 90%;
+        margin: auto;
     }
 }
