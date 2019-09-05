@@ -306,7 +306,8 @@ li > a {
         margin: 0;
     }
     #page-title {
-        margin: 0 2em;
+        margin: 0 auto;
+        min-width: 18rem;
         /* min-width: 0; */
         /* width: 0; */
 
