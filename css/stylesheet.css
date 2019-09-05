@@ -105,7 +105,7 @@ h2, h3, h4, h5, h6 {
 }
 
 #grid .col {
-    background-color: #f6f6f6;
+    background-color: #f6f6f661;
     border: 1px solid #cacaca5c;
     flex-grow: 1;
     margin: 0 2rem 2rem 0;
