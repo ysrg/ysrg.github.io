@@ -7,7 +7,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap" rel="stylesheet">
 
         <title>Javascript Closures</title>
 
@@ -27,9 +27,12 @@
             </p>
         </header>
         <div class="blog-post-content">
-            <p>Closures are all around in our code, you just need to recognize and leverage them. They happen as a result of writing code that relies heavily on lexical scope. *A <strong>closure</strong> is a function that is able to remember and access its surrounding lexical scope even when that function is executing outside its lexical scope.* Closures are a neat way of dealing with the following two realities of JavaScript:
-* Scope is at the function level, not the block level
-* Much of what you do in practice in JavaScript is asynchronous/event driven so there is a need to remember the scope of authored-time function declarations.</p>
+            <p>Closures are all around in our code, you just need to recognize and leverage them. They happen as a result of writing code that relies heavily on lexical scope. A <strong>closure</strong> is a function that is able to remember and access its surrounding lexical scope even when that function is executing outside its lexical scope. Closures are a neat way of dealing with the following two realities of JavaScript:</p>
+
+<ul>
+<li>Scope is at the function level, not the block level</li>
+
+<li><p>Much of what you do in practice in JavaScript is asynchronous/event driven so there is a need to remember the scope of authored-time function declarations.</p>
 <div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#008000;font-weight:bold">function</span> name() {
 	<span style="color:#008000;font-weight:bold">var</span> me <span style="color:#666">=</span> john;
 	<span style="color:#008000;font-weight:bold">function</span> logName() {
@@ -39,7 +42,9 @@
 }
 <span style="color:#008000;font-weight:bold">var</span> globalLog <span style="color:#666">=</span> name();
 globalLog(); <span style="color:#408080;font-style:italic">// john
-</span></code></pre></div>
+</span></code></pre></div></li>
+</ul>
+
 <p>Function <code>logName</code> has a closure(or <em>closes</em>) over the scope of <code>name</code> (and global scope as well) simply because it appears nested inside of <code>name</code>.  We execute <code>logName</code> outside the authored-time lexical scope by a different identifier reference. You’d expect the <em>Garbage Collector</em> to come along and free up memory after the <code>name()</code>  gets executed, but given that <code>logName</code> still uses the scope of  <code>name</code>  you’ll still have access to the <code>name</code> scope.
 Goin further, anywhere you see functions passed around as values and invoked in other locations — you can observe closures.</p>
 <div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#008000;font-weight:bold">function</span> name() {
