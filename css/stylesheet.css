@@ -156,7 +156,6 @@ a {
 }
 
 #posts {
-    padding-left: 2em;
     font-size: .9em;
     line-height: 2em;
 }
@@ -327,7 +326,6 @@ li > a {
     }
     #posts {
         font-size: .7em;
-        padding-left: 0;
     }
     .col.posts {
         background: #eeeeee !important;
