@@ -17,7 +17,7 @@
       <pubDate>Wed, 04 Sep 2019 05:42:10 +0300</pubDate>
       
       <guid>https://ysrg.github.io/posts/javascript-closures/</guid>
-      <description>Closures are all around in our code, you just need to recognize and leverage them. They happen as a result of writing code that relies heavily on lexical scope. A closure is a function that is able to remember and access its surrounding lexical scope even when that function is executing outside its lexical scope. Closures are a neat way of dealing with the following two realities of JavaScript:
+      <description>Closures are all around in our code, we just need to recognize and leverage them. They happen as a result of writing code that relies heavily on lexical scope. A closure is a function that is able to remember and access its surrounding lexical scope even when that function is executing outside its lexical scope. Closures are a neat way of dealing with the following two realities of JavaScript:
  Scope is at the function level, not the block level Much of what you do in practice in JavaScript is asynchronous/event driven so there is a need to remember the scope of authored-time function declarations.</description>
     </item>
     
