@@ -347,4 +347,7 @@ li > a {
         width: 90%;
         margin: auto;
     }
+    pre > code {
+        font-size: 65%;
+    }
 }
