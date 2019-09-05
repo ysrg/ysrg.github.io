@@ -274,7 +274,6 @@ pre[class*="chroma"]
 }
 .blog-post-content {
     font-family: 'Open Sans', sans-serif;
-    max-width: calc(100% - 8rem);
     line-height: 24px;
 }
 :not(pre) > code {
