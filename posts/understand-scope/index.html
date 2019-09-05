@@ -31,7 +31,7 @@
 
 <p>Scope in Javascript is a set of rules that determines how and where a variable(identifier) can be looked up.</p>
 
-<h3 id="a-brief-refresher">A brief refresher.</h3>
+<h3 id="a-brief-refresher">A brief refresher</h3>
 
 <p>To understand scope, you need to be familiar with some basics of how Javascript (or any other programming language, really) works. Unlike other languages out there, Javascript code is compiled right before (like &lt; 1ms) execution. The main parts of this process are:
 1. <em>Engine</em> - responsible for compilation and execution of the program
@@ -43,16 +43,16 @@
 <p>First thing that occurs is Compiler declares <code>var x;</code> in the current scope (if it previously wasn’t declared in the current scope) and second - the Engine looks up the variable in the scope and assigns a value if found(<code>= 1;</code>).  This is a /LHS look up/.
     Look-ups may be for the purpose of assigning a value to the variable which is <em>LHS (left-hand-side) reference</em> (eg  <code>var x = 1;</code>) , or may for the purposes of retrieving a value - which is a <em>RHS(right-hand-side) reference</em> (eg  <code>console.log(x)</code>). LHS references result from assignment operation. Scope related assignments can occur either with the <code>=</code> operator or when passing arguments to functions parameters.</p>
 
-<h3 id="nested-scope">Nested scope.</h3>
+<h3 id="nested-scope">Nested scope</h3>
 
 <p>Usually there is more than one scope to consider. Just as a function block can be nested in another, so can scopes be nested in other scopes. In that case, if a variable cannot be found in the immediate scope, the engine consults the next outer containing scope, continuing until found or until the outermost (eg global) scope has been reached. If not found - it throws a <code>ReferenceError</code> - meaning that a RHS look-up failed. By contrast, if the engine does a LHS look-up (not in “strict  mode”) and doesn’t find the variable by the time it reaches the global scope - it automatically creates one(in “strict mode” it throws <code>ReferenceError</code> ). If a value is found for RHS and you try to do something with its value that is impossible (like referencing a property on <code>null</code> or <code>undefined</code> value) the engine throws a <code>TypeError</code>. <code>ReferenceError</code> is scope resolution-failure related, whereas <code>TypeError</code> implies that scope resolution was successful, but that there was an illegal/impossible action attempted against the result.</p>
 
-<h3 id="lexical-scope">Lexical scope.</h3>
+<h3 id="lexical-scope">Lexical scope</h3>
 
 <p>As we already now, before executing, a program undergoes  compilation process. Before the compiler parses the code, it tokenizes (also know as lexing which basically  means examining a string of source code characters and assigning semantic meaning to the tokens ) our code into small chunks. The scope defined at this stage is in fact the /Lexical Scope/. — and is based on where variables and blocks of scope are authored (at write time). When nesting functions, each function has its own local scope, and the variable look-up starts at the innermost function scope and stops once it finds the first match, otherwise the look up ends in the global scope. The same identifier can be found in multiple nested scopes - called “shadowing”, when innermost found match overshadows the outer scope ones. Shadowed variables cannot be accessed except the global one, which in browser for example is a property on the <code>window</code> object.
 !!! <em>No matter where a function is invoked from, or even how it is invoked, its lexical scope is only defined by where the function was declared.</em> (this gives great power we can use in our code — /Closures/ are based on this concept).</p>
 
-<h3 id="functions-as-scope">Functions as Scope.</h3>
+<h3 id="functions-as-scope">Functions as Scope</h3>
 
 <p>Functions are the most common unit of scope in Javascript. Variables and functions that are declared in another functions are hidden from any surrounding scopes, which is an intentional design principle.</p>
 <div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#008000;font-weight:bold">var</span> x <span style="color:#666">=</span> <span style="color:#666">1</span>;
@@ -88,7 +88,7 @@ Another variation on IIFE&rsquo;s which is quite common is to use the fact that 
 </span><span style="color:#408080;font-style:italic"></span>
 })( <span style="color:#008000">window</span> );
 </code></pre></div>
-<h3 id="blocks-as-scopes">Blocks as Scopes.</h3>
+<h3 id="blocks-as-scopes">Blocks as Scopes</h3>
 
 <p>While functions are the most common unit of scope, and certainly the most wide-spread of the design approaches in the majority of JS in circulation, other units of scope are possible, and the usage of these other scope units can lead to even better, cleaner to maintain code. Javascript, unlike other  languages, doesn’t support the pure Block Scope per se. Take this example —</p>
 <div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#008000;font-weight:bold">for</span> (<span style="color:#008000;font-weight:bold">var</span> i<span style="color:#666">=</span><span style="color:#666">0</span>; i<span style="color:#666">&lt;</span><span style="color:#666">10</span>; i<span style="color:#666">++</span>) {

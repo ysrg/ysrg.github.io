@@ -28,7 +28,7 @@
       
       <guid>https://ysrg.github.io/posts/understand-scope/</guid>
       <description>Scope in Javascript is a set of rules that determines how and where a variable(identifier) can be looked up.
-A brief refresher. To understand scope, you need to be familiar with some basics of how Javascript (or any other programming language, really) works. Unlike other languages out there, Javascript code is compiled right before (like &amp;lt; 1ms) execution. The main parts of this process are: 1. Engine - responsible for compilation and execution of the program 2.</description>
+A brief refresher To understand scope, you need to be familiar with some basics of how Javascript (or any other programming language, really) works. Unlike other languages out there, Javascript code is compiled right before (like &amp;lt; 1ms) execution. The main parts of this process are: 1. Engine - responsible for compilation and execution of the program 2.</description>
     </item>
     
   </channel>
