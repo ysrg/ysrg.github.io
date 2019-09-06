@@ -31,5 +31,15 @@
 A brief refresher To understand scope, you need to be familiar with some basics of how Javascript (or any other programming language, really) works. Unlike other languages out there, Javascript code is compiled right before (like &amp;lt; 1ms) execution. The main parts of this process are: 1. Engine - responsible for compilation and execution of the program 2.</description>
     </item>
     
+    <item>
+      <title>Hoisting in Javascript</title>
+      <link>https://ysrg.github.io/posts/js-hoisting/</link>
+      <pubDate>Tue, 06 Aug 2019 05:42:10 +0300</pubDate>
+      
+      <guid>https://ysrg.github.io/posts/js-hoisting/</guid>
+      <description>As you probably know, javascript code is interpreted line by line top-to-bottom &amp;hellip;most of the time. Consider this code &amp;ndash;
+alert(x); const x = 1  Most people would assume one of the two: either the browser will alert &amp;lsquo;1&amp;rsquo; or we will get a ReferenceError, since we are using a variable before it is declared. The thing is none of the above is the right answer. Let&amp;rsquo;s take an aside for a minute and think about the internals of javascript.</description>
+    </item>
+    
   </channel>
 </rss>

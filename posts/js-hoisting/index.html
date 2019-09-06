@@ -1,0 +1,96 @@
+<div id="container">
+    <!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="/css/stylesheet.css">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap" rel="stylesheet">
+
+        <title>Hoisting in Javascript</title>
+
+    </head>
+    <body>
+        <header id="page-title">
+            <h1><a href="/">[Sergey Moraru]</a></h1>
+        </header>
+
+
+
+    <div class="single">
+        <article id="content">
+            <header>
+                <h1>Hoisting in Javascript</h1>
+                <p class="blog-post-subheader">
+                    Published on  August 6, 2019
+                </p>
+            </header>
+            <div class="blog-post-content">
+                <p>As you probably know, javascript code is interpreted line by line top-to-bottom &hellip;most of the time. Consider this code &ndash;</p>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js">alert(x);
+<span style="color:#008000;font-weight:bold">const</span> x <span style="color:#666">=</span> <span style="color:#666">1</span>
+</code></pre></div>
+<p>Most people would assume one of the two: either the browser will alert &lsquo;1&rsquo; or we will get a ReferenceError, since we are using a variable before it is declared. The thing is none of the above is the right answer. Let&rsquo;s take an aside for a minute and think about the internals of javascript. JS engine compiles your code right before it interprets(executes) it. Part of the compilation phase is to find and associate all declarations with their appropriate scopes &ndash; the heart of Lexical Scope. Now, all the declaration (variables and functions) are processed first, before any part of the code is executed. This result in const x = 1 actually being two statements. The first one &ndash; the declaration const x is processed during compilation phase; the second one &ndash; the assignment is left in place for the execution phase. That being said, the previous snippet can be rewritten as</p>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#008000;font-weight:bold">const</span> x;
+alert(x);
+x <span style="color:#666">=</span> <span style="color:#666">1</span>;
+</code></pre></div>
+<p>That is why when you see code like</p>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js">print(<span style="color:#666">5</span>);
+
+<span style="color:#008000;font-weight:bold">function</span> print(x) {
+  console.log(x);
+}
+</code></pre></div>
+<p>it just works because of hoisting &ndash; declarations are moved/lifted to the top of the current scope, and assignments are left in place.
+Compared to function declarations, function expressions are not hoisted.</p>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js">print(); <span style="color:#408080;font-style:italic">//TypeError, not ReferenceError. Variable print is defined due to hoisting,
+</span><span style="color:#408080;font-style:italic">//but is it not yet assigned so the engine is trying to invoke an undefined value.
+</span><span style="color:#408080;font-style:italic"></span><span style="color:#008000;font-weight:bold">const</span> print <span style="color:#666">=</span> <span style="color:#008000;font-weight:bold">function</span> printSomething() {
+  console.log(<span style="color:#ba2121">&#39;Hello&#39;</span>);
+}
+</code></pre></div>
+<p>Also, invoking <code>printSomething</code> will throw a <code>ReferenceError</code> as the name identifier is not available in the enclosing scope.
+A good thing to remember is that function declarations are hoisted first and then the variable declarations. Consider this &ndash;</p>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js">print(); <span style="color:#408080;font-style:italic">//prints hello
+</span><span style="color:#408080;font-style:italic"></span><span style="color:#008000;font-weight:bold">const</span> print;
+
+<span style="color:#008000;font-weight:bold">function</span> print() {
+  console.log(<span style="color:#ba2121">&#39;Hello&#39;</span>);
+}
+
+print <span style="color:#666">=</span> <span style="color:#008000;font-weight:bold">function</span>() {
+  console.log(<span style="color:#ba2121">&#39;Bye&#39;</span>);
+}
+</code></pre></div>
+<p>Engine is interpreting this snippet as</p>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#008000;font-weight:bold">function</span> print() {
+  console.log(<span style="color:#ba2121">&#39;Hello&#39;</span>);
+}
+
+print();
+
+print <span style="color:#666">=</span> <span style="color:#008000;font-weight:bold">function</span>() {
+  console.log(<span style="color:#ba2121">&#39;Bye&#39;</span>);
+}
+</code></pre></div>
+<p>Notice that the <code>const print</code> declaration was a duplicate and subsequently ignored, even though it came before the <code>print</code> declaration. While duplicate variable declaration are ignored, subsequent function declarations override previous ones.</p>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js">print(); <span style="color:#408080;font-style:italic">// Logs &#39;bye&#39;
+</span><span style="color:#408080;font-style:italic"></span>
+<span style="color:#008000;font-weight:bold">function</span> print() {
+  console.log(<span style="color:#ba2121">&#39;Hi&#39;</span>);
+}
+
+<span style="color:#008000;font-weight:bold">function</span> print() {
+  console.log(<span style="color:#ba2121">&#39;Bye&#39;</span>);
+}
+</code></pre></div>
+<p>NB: Function declarations that appear in normal blocks (like if statements) are hoisted to the enclosing scope.</p>
+
+            </div>
+        </article>
+    </div>
+            </body>
+</html>
+</div>
