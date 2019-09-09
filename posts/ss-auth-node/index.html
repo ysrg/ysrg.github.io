@@ -30,16 +30,16 @@
                 
 
 <p>Let us quickly put together a server app for our project:</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4">~/ mkdir ss-auth &amp;&amp; $_
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">~/ mkdir ss-auth <span style="color:#666">&amp;&amp;</span> <span style="color:#19177c">$_</span>
 ~/ss-auth/npm init -y
 ~/ss-auth/ npm i -S express mongoose morgan body-parser
-~/ss-auth/ touch index.js &amp;&amp; router.js</pre></div>
+~/ss-auth/ touch index.js <span style="color:#666">&amp;&amp;</span> router.js</code></pre></div>
 <p>It will look like so —</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4">├── node_modules
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">├── node_modules
 ├── index.js
 ├── package-lock.json
 ├── package.json
-└── router.js</pre></div>
+└── router.js</code></pre></div>
 <p><code>index.js</code> -</p>
 <div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#008000;font-weight:bold">const</span> express <span style="color:#666">=</span> require(<span style="color:#ba2121">&#39;express&#39;</span>);
 <span style="color:#008000;font-weight:bold">const</span> http <span style="color:#666">=</span> require(<span style="color:#ba2121">&#39;http&#39;</span>);
@@ -59,8 +59,8 @@ router(app);
 server.listen(port, console.log(<span style="color:#ba2121">&#39;Server listening on:&#39;</span>, port))
 </code></pre></div>
 <p>You will need to install <a href="https://docs.mongodb.com/manual/installation/">MongoDB</a> itself first. To abstract the interaction with our Mongo database we will use a library called Mongoose. To make use of it, we will create a <em>user model</em> — that will have 2 properties — an email and a password and feed it to Mongoose.</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4">~/ss-auth/ mkdir models
-~/ss-auth/ cd models &amp;&amp; touch user.js</pre></div>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">~/ss-auth/ mkdir models
+~/ss-auth/ <span style="color:#008000">cd</span> models <span style="color:#666">&amp;&amp;</span> touch user.js</code></pre></div>
 <p>Let’s edit the <code>user.js</code> file to configure our model. <code>Schema</code> tells MongoDB about particular fields that our model is going to have —</p>
 <div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#008000;font-weight:bold">const</span> mongoose <span style="color:#666">=</span> require(<span style="color:#ba2121">&#39;mongoose&#39;</span>);
 <span style="color:#008000;font-weight:bold">const</span> Schema <span style="color:#666">=</span> mongoose.Schema;
@@ -85,7 +85,7 @@ module.exports <span style="color:#666">=</span> ModelClass
 <h5 id="routing">Routing</h5>
 
 <p>Every time we receive a request it will go through our router (<code>router.js</code>) that will decide which controller to send the request to. An application can have multiple controllers (comments, posts, etc), in our case we will need an Authentication Controller in which we will define the logic of handling the incoming requests and sending back a response.</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4">~/ss-auth/mkdir controllers &amp;&amp; touch authentication.js</pre></div><div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-JS" data-lang="JS">exports.signup <span style="color:#666">=</span> <span style="color:#008000;font-weight:bold">function</span>(req, res, next) {
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">~/ss-auth/mkdir controllers <span style="color:#666">&amp;&amp;</span> touch authentication.js</code></pre></div><div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-JS" data-lang="JS">exports.signup <span style="color:#666">=</span> <span style="color:#008000;font-weight:bold">function</span>(req, res, next) {
   <span style="color:#008000;font-weight:bold">const</span> email <span style="color:#666">=</span> req.body.email;
   <span style="color:#008000;font-weight:bold">const</span> password <span style="color:#666">=</span> req.body.password;
   User.findOne({ email }, <span style="color:#008000;font-weight:bold">function</span>(err, existingUser){
@@ -115,7 +115,7 @@ module.exports <span style="color:#666">=</span> <span style="color:#008000;font
 <h5 id="encrypting-passwords-with-bcrypt">Encrypting passwords with Bcrypt</h5>
 
 <p>Every time we want to store a password to the database we have to encrypt it first to avoid security issues.</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4">~/ss-auth/npm i -S bcrypt-nodejs</pre></div>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">~/ss-auth/npm i -S bcrypt-nodejs</code></pre></div>
 <p>Update <code>user.js</code> —</p>
 <div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#008000;font-weight:bold">const</span> mongoose <span style="color:#666">=</span> require(<span style="color:#ba2121">&#39;mongoose&#39;</span>);
 <span style="color:#008000;font-weight:bold">const</span> Schema <span style="color:#666">=</span> mongoose.Schema;
@@ -168,8 +168,8 @@ module.exports <span style="color:#666">=</span> ModelClass;
 <em>JWT + our secret string = User ID</em></p>
 
 <p>The secret string is used for security reasons so just us can decrypt the tokens. We should add it to <code>.gitignore</code> and make sure we don’t share it.</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4">~/ss-auth/ npm i -S jwt-simple
-~/ss-auth/ touch config.js</pre></div><div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js">module.exports <span style="color:#666">=</span> {
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">~/ss-auth/ npm i -S jwt-simple
+~/ss-auth/ touch config.js</code></pre></div><div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js">module.exports <span style="color:#666">=</span> {
   secret<span style="color:#666">:</span> <span style="color:#ba2121">&#39;392ufnjawd&#39;</span>
 }
 </code></pre></div>
@@ -211,9 +211,9 @@ exports.signup <span style="color:#666">=</span> <span style="color:#008000;font
 </code></pre></div>
 <p>Lets digest what is happening here. Someone attempts to signs up with a username and password. First we check for errors and existing users, if we are ok —  we generate a new entry and send back the token for user to use in the future for authenticated requests. To generate a token we make use of the <code>encode</code> of the <code>jwt-simple</code> library, that takes as parameters an object containing the user id and the timestamp and the other parameter is our secret string. The method is called only when the user is  successfully saved in our database, so we have access to the _id generated by Mongo to generate the token.
 So far, we are handling just the sign up for users to receive an authentication token. Now, we will have to handle how our users will access protected routes. Also, we want to centralize this logic so the checking takes place once for all controllers.   For this will use <code>PassportJs</code>. Passport makes use of so-called strategies — methods/plugins for authenticating a user. <code>passport-jwt</code> is a strategy to authenticate users by using JSON web tokens. <code>passport-local</code> strategy makes use of username and password to verify user credentials. There are lots of other strategies out there(like facebook login, google login, etc), we will cover just these two here.</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4">~/ss-auth/ npm i -S passport passport-jwt
-~/ss-auth/ mkdir services &amp;&amp; $_ &amp;&amp; touch passport.js</pre></div>
-<p>passport.js</p>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">~/ss-auth/ npm i -S passport passport-jwt
+~/ss-auth/ mkdir services <span style="color:#666">&amp;&amp;</span> <span style="color:#19177c">$_</span> <span style="color:#666">&amp;&amp;</span> touch passport.js</code></pre></div>
+<p><code>passport.js</code></p>
 <div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#008000;font-weight:bold">const</span> passport <span style="color:#666">=</span> require(<span style="color:#ba2121">&#39;passport&#39;</span>);
 <span style="color:#008000;font-weight:bold">const</span> JwtStrategy <span style="color:#666">=</span> require(<span style="color:#ba2121">&#39;passport-jwt&#39;</span>).Strategy;
 <span style="color:#008000;font-weight:bold">const</span> Extractjwt <span style="color:#666">=</span> require(<span style="color:#ba2121">&#39;passport-jwt&#39;</span>).ExtractJwt;
@@ -259,7 +259,7 @@ module.exports <span style="color:#666">=</span> <span style="color:#008000;font
 <p>In here we will specify on which route we want to use our strategy. Let’s say for us to access the root of our page we need to be authenticated. The second param of the get method will be the <code>requireAuth</code> helper that acts like a middleware that intercepts our request and if successful — runs the callback function. The helper is just a <code>authenticate</code> call on the <code>passport</code> object, specifying that we want to use the jwt strategy and don’t want a cookie based session for our users.</p>
 
 <p>Ok, lets test what we’ve done so far. Fire up Postman and make a <code>get</code>  request to <code>/</code> on your server. We will get <code>Unauthorized</code> in the response body. That is because we didn’t supply a token when attempted to access the route. Lets sign up for an account, that way we will receive an encoded token from the server. Make a <code>post</code> request to <code>/signup</code> with an email and a password. If successful — you will see a token string in the response body. Copy it. Now make a <code>get</code> request again, but this time paste the token as value for the <code>authorization</code> header. If successful you will receive  <code>{&quot;hi&quot;: “there”}</code> in the response. This is good and all, but the end users aren’t aware of any token being involved. Our means of authentication will be the email and the password. That means that on a log in attempt we will get an email and a password and if we confirm them — we give the user a token. For this we will make use of <code>passport-local</code> strategy.</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4">~/ss-auth/ npm i -S passport passport-local</pre></div>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">~/ss-auth/ npm i -S passport passport-local</code></pre></div>
 <p>Create a local strategy in <code>passport.js</code> —</p>
 <div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#008000;font-weight:bold">const</span> passport <span style="color:#666">=</span> require(<span style="color:#ba2121">&#39;passport&#39;</span>);
 <span style="color:#008000;font-weight:bold">const</span> JwtStrategy <span style="color:#666">=</span> require(<span style="color:#ba2121">&#39;passport-jwt&#39;</span>).Strategy;
@@ -298,9 +298,7 @@ module.exports <span style="color:#666">=</span> <span style="color:#008000;font
 <span style="color:#408080;font-style:italic">//instruct passport to use the strategies
 </span><span style="color:#408080;font-style:italic"></span>passport.use(jwtLogin);
 </code></pre></div>
-<p>Local strategy will look for a <code>username</code> field by default so we have to specify an option to tell it that our usernameField is the email.
-  Ok, so why do we need two strategies for authentication? The jwt strategy is verifying if the user sends a valid token(eg — stored in localStorage) every time she makes a request on one of our protected routes. Remember, users don’t know what is happening behind the curtains and how the information flows, they interact with the UI. In order to give them a token for future authenticated requests we need to log them in first using email and password — here comes in play the local strategy.
-  In the new local strategy instance we will have to verify the email and password provided by the user. We will search the database for the email and if we find the user — will have to compare the passwords. But here is the caveat, we have a plain password provided by the user at log in and we have to compare it with our hashed password(check <code>user.js</code>) stored in the database. Here is how the process works:
+<p>Local strategy will look for a <code>username</code> field by default so we have to specify an option to tell it that our usernameField is the email. Ok, so why do we need two strategies for authentication? The jwt strategy is verifying if the user sends a valid token(eg — stored in localStorage) every time she makes a request on one of our protected routes. Remember, users don’t know what is happening behind the curtains and how the information flows, they interact with the UI. In order to give them a token for future authenticated requests we need to log them in first using email and password — here comes in play the local strategy. In the new local strategy instance we will have to verify the email and password provided by the user. We will search the database for the email and if we find the user — will have to compare the passwords. But here is the caveat, we have a plain password provided by the user at log in and we have to compare it with our hashed password(check <code>user.js</code>) stored in the database. Here is how the process works:
   1. Bcrypt takes the plain password and encrypts it using our salt.
   2. The resulting hashed password it then compared with that stored in our database. If they match — the user can receive a token from the server.</p>
 
