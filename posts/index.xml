@@ -41,5 +41,17 @@ A brief refresher To understand scope, you need to be familiar with some basics 
 alert(x); const x = 1  Most people would assume one of the two: either the browser will alert &amp;lsquo;1&amp;rsquo; or we will get a ReferenceError, since we are using a variable before it is declared. The thing is none of the above is the right answer. Let&amp;rsquo;s take an aside for a minute and think about the internals of javascript.</description>
     </item>
     
+    <item>
+      <title>Server—side Authentication in NodeJS</title>
+      <link>https://ysrg.github.io/posts/ss-auth-node/</link>
+      <pubDate>Thu, 18 Jul 2019 05:42:10 +0300</pubDate>
+      
+      <guid>https://ysrg.github.io/posts/ss-auth-node/</guid>
+      <description>Let us quickly put together a server app for our project:
+~/ mkdir ss-auth &amp;amp;&amp;amp; $_ ~/ss-auth/npm init -y ~/ss-auth/ npm i -S express mongoose morgan body-parser ~/ss-auth/ touch index.js &amp;amp;&amp;amp; router.js It will look like so —
+├── node_modules ├── index.js ├── package-lock.json ├── package.json └── router.js index.js -
+const express = require(&amp;#39;express&amp;#39;); const http = require(&amp;#39;http&amp;#39;); const bodyParser = require(&amp;#39;body-parser&amp;#39;); const morgan = require(&amp;#39;morgan&amp;#39;); const mongoose = require(&amp;#39;mongoose&amp;#39;); const router = require(&amp;#39;.</description>
+    </item>
+    
   </channel>
 </rss>

@@ -1,0 +1,463 @@
+<div id="container">
+    <!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="/css/stylesheet.css">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap" rel="stylesheet">
+
+        <title>Server—side Authentication in NodeJS</title>
+
+    </head>
+    <body>
+        <header id="page-title">
+            <h1><a href="/">[Sergey Moraru]</a></h1>
+        </header>
+
+
+
+    <div class="single">
+        <article id="content">
+            <header>
+                <h1>Server—side Authentication in NodeJS</h1>
+                <p class="blog-post-subheader">
+                    Published on  July 18, 2019
+                </p>
+            </header>
+            <div class="blog-post-content">
+                
+
+<p>Let us quickly put together a server app for our project:</p>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4">~/ mkdir ss-auth &amp;&amp; $_
+~/ss-auth/npm init -y
+~/ss-auth/ npm i -S express mongoose morgan body-parser
+~/ss-auth/ touch index.js &amp;&amp; router.js</pre></div>
+<p>It will look like so —</p>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4">├── node_modules
+├── index.js
+├── package-lock.json
+├── package.json
+└── router.js</pre></div>
+<p><code>index.js</code> -</p>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#008000;font-weight:bold">const</span> express <span style="color:#666">=</span> require(<span style="color:#ba2121">&#39;express&#39;</span>);
+<span style="color:#008000;font-weight:bold">const</span> http <span style="color:#666">=</span> require(<span style="color:#ba2121">&#39;http&#39;</span>);
+<span style="color:#008000;font-weight:bold">const</span> bodyParser <span style="color:#666">=</span> require(<span style="color:#ba2121">&#39;body-parser&#39;</span>);
+<span style="color:#008000;font-weight:bold">const</span> morgan <span style="color:#666">=</span> require(<span style="color:#ba2121">&#39;morgan&#39;</span>);
+<span style="color:#008000;font-weight:bold">const</span> mongoose <span style="color:#666">=</span> require(<span style="color:#ba2121">&#39;mongoose&#39;</span>);
+<span style="color:#008000;font-weight:bold">const</span> router <span style="color:#666">=</span> require(<span style="color:#ba2121">&#39;./router&#39;</span>)
+
+mongoose.connect(<span style="color:#ba2121">&#39;mongodb://localhost:auth/auth&#39;</span>);
+<span style="color:#008000;font-weight:bold">const</span> app <span style="color:#666">=</span> express();
+app.use(morgan(<span style="color:#ba2121">&#39;combined&#39;</span>));
+app.use(bodyParser.json({type<span style="color:#666">:</span> <span style="color:#ba2121">&#39;*/*&#39;</span>}));
+router(app);
+
+<span style="color:#008000;font-weight:bold">const</span> port <span style="color:#666">=</span> process.env.PORT <span style="color:#666">||</span> <span style="color:#666">8080</span>;
+<span style="color:#008000;font-weight:bold">const</span> server <span style="color:#666">=</span> http.createServer(app)
+server.listen(port, console.log(<span style="color:#ba2121">&#39;Server listening on:&#39;</span>, port))
+</code></pre></div>
+<p>You will need to install <a href="https://docs.mongodb.com/manual/installation/">MongoDB</a> itself first. To abstract the interaction with our Mongo database we will use a library called Mongoose. To make use of it, we will create a <em>user model</em> — that will have 2 properties — an email and a password and feed it to Mongoose.</p>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4">~/ss-auth/ mkdir models
+~/ss-auth/ cd models &amp;&amp; touch user.js</pre></div>
+<p>Let’s edit the <code>user.js</code> file to configure our model. <code>Schema</code> tells MongoDB about particular fields that our model is going to have —</p>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#008000;font-weight:bold">const</span> mongoose <span style="color:#666">=</span> require(<span style="color:#ba2121">&#39;mongoose&#39;</span>);
+<span style="color:#008000;font-weight:bold">const</span> Schema <span style="color:#666">=</span> mongoose.Schema;
+
+<span style="color:#408080;font-style:italic">//Define our model
+</span><span style="color:#408080;font-style:italic"></span><span style="color:#008000;font-weight:bold">const</span> userSchema <span style="color:#666">=</span> <span style="color:#008000;font-weight:bold">new</span> Schema({
+  email<span style="color:#666">:</span> {
+    type<span style="color:#666">:</span> <span style="color:#008000">String</span>,
+    unique<span style="color:#666">:</span> <span style="color:#008000;font-weight:bold">true</span>,
+    lowercase<span style="color:#666">:</span> <span style="color:#008000;font-weight:bold">true</span>
+  },
+  password<span style="color:#666">:</span> <span style="color:#008000">String</span>
+});
+
+<span style="color:#408080;font-style:italic">//Create the model class
+</span><span style="color:#408080;font-style:italic"></span><span style="color:#008000;font-weight:bold">const</span> ModelClass <span style="color:#666">=</span> mongoose.model(<span style="color:#ba2121">&#39;user&#39;</span>, userSchema)
+
+module.exports <span style="color:#666">=</span> ModelClass
+</code></pre></div>
+<p>What <code>unique: true</code> does is to tell MongoDB, whenever a new user is created, to check if the email field is unique and wasn’t saved to database before, otherwise throw an error. MongoDB doesn’t enforce string case check by default and because of that we need the <code>lowercase: true</code> to transform the new email to lower case and then check if it is unique.</p>
+
+<h5 id="routing">Routing</h5>
+
+<p>Every time we receive a request it will go through our router (<code>router.js</code>) that will decide which controller to send the request to. An application can have multiple controllers (comments, posts, etc), in our case we will need an Authentication Controller in which we will define the logic of handling the incoming requests and sending back a response.</p>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4">~/ss-auth/mkdir controllers &amp;&amp; touch authentication.js</pre></div><div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-JS" data-lang="JS">exports.signup <span style="color:#666">=</span> <span style="color:#008000;font-weight:bold">function</span>(req, res, next) {
+  <span style="color:#008000;font-weight:bold">const</span> email <span style="color:#666">=</span> req.body.email;
+  <span style="color:#008000;font-weight:bold">const</span> password <span style="color:#666">=</span> req.body.password;
+  User.findOne({ email }, <span style="color:#008000;font-weight:bold">function</span>(err, existingUser){
+    <span style="color:#008000;font-weight:bold">if</span>(err) <span style="color:#008000;font-weight:bold">return</span> next(err);
+    <span style="color:#008000;font-weight:bold">if</span>(existingUser) <span style="color:#008000;font-weight:bold">return</span> res.status(<span style="color:#666">422</span>).send({ error<span style="color:#666">:</span> <span style="color:#ba2121">&#39;Email is in use&#39;</span> });
+
+    <span style="color:#008000;font-weight:bold">const</span> user <span style="color:#666">=</span> <span style="color:#008000;font-weight:bold">new</span> User({
+      email,
+      password
+    });
+    user.save(<span style="color:#008000;font-weight:bold">function</span>(err) {
+      <span style="color:#008000;font-weight:bold">if</span>(err) {<span style="color:#008000;font-weight:bold">return</span> next(err);}
+      res.json({ success<span style="color:#666">:</span> <span style="color:#008000;font-weight:bold">true</span> })
+    });
+  })
+}
+</code></pre></div>
+<p><code>router.js</code> —</p>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#008000;font-weight:bold">const</span> signUp <span style="color:#666">=</span> require(<span style="color:#ba2121">&#39;./controllers/authentication&#39;</span>).signup;
+
+module.exports <span style="color:#666">=</span> <span style="color:#008000;font-weight:bold">function</span> (app) {
+  app.post(<span style="color:#ba2121">&#39;/signup&#39;</span>, signUp);
+}
+</code></pre></div>
+<p>Launch Postman and make a <code>post</code> request with raw JSON to <code>localhost:8080/signup</code> and you should see in the response body <code>success: true</code>.</p>
+
+<h5 id="encrypting-passwords-with-bcrypt">Encrypting passwords with Bcrypt</h5>
+
+<p>Every time we want to store a password to the database we have to encrypt it first to avoid security issues.</p>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4">~/ss-auth/npm i -S bcrypt-nodejs</pre></div>
+<p>Update <code>user.js</code> —</p>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#008000;font-weight:bold">const</span> mongoose <span style="color:#666">=</span> require(<span style="color:#ba2121">&#39;mongoose&#39;</span>);
+<span style="color:#008000;font-weight:bold">const</span> Schema <span style="color:#666">=</span> mongoose.Schema;
+<span style="color:#008000;font-weight:bold">const</span> bcrypt <span style="color:#666">=</span> require(<span style="color:#ba2121">&#39;bcrypt-nodejs&#39;</span>);
+
+<span style="color:#408080;font-style:italic">//Define our model
+</span><span style="color:#408080;font-style:italic"></span><span style="color:#008000;font-weight:bold">const</span> userSchema <span style="color:#666">=</span> <span style="color:#008000;font-weight:bold">new</span> Schema({
+  email<span style="color:#666">:</span> {
+    type<span style="color:#666">:</span> <span style="color:#008000">String</span>,
+    unique<span style="color:#666">:</span> <span style="color:#008000;font-weight:bold">true</span>,
+    lowercase<span style="color:#666">:</span> <span style="color:#008000;font-weight:bold">true</span>
+  },
+  password<span style="color:#666">:</span> <span style="color:#008000">String</span>
+});
+
+<span style="color:#408080;font-style:italic">// On save - encrypt password
+</span><span style="color:#408080;font-style:italic"></span>userSchema.pre(<span style="color:#ba2121">&#39;save&#39;</span>, <span style="color:#008000;font-weight:bold">function</span>(next) {
+  <span style="color:#408080;font-style:italic">//get access to the user model
+</span><span style="color:#408080;font-style:italic"></span>  <span style="color:#008000;font-weight:bold">const</span> user <span style="color:#666">=</span> <span style="color:#008000;font-weight:bold">this</span>;
+
+  <span style="color:#408080;font-style:italic">//generate a salt the run cb
+</span><span style="color:#408080;font-style:italic"></span>  bcrypt.genSalt(<span style="color:#666">10</span>, <span style="color:#008000;font-weight:bold">function</span>(err, salt){
+    <span style="color:#008000;font-weight:bold">if</span>(err) <span style="color:#008000;font-weight:bold">return</span> next(err);
+
+  <span style="color:#408080;font-style:italic">//hash(encrypt) the password using salt
+</span><span style="color:#408080;font-style:italic"></span>  bcrypt.hash(user.password, salt, <span style="color:#008000;font-weight:bold">null</span>, <span style="color:#008000;font-weight:bold">function</span> (err, hash) {
+    <span style="color:#008000;font-weight:bold">if</span>(err) <span style="color:#008000;font-weight:bold">return</span> next(err);
+
+    <span style="color:#408080;font-style:italic">//overwrite plain text password with encrypted password
+</span><span style="color:#408080;font-style:italic"></span>    user.password <span style="color:#666">=</span> hash;
+    <span style="color:#408080;font-style:italic">//go ahead and save the model
+</span><span style="color:#408080;font-style:italic"></span>    next();
+  })
+  })
+})
+
+<span style="color:#408080;font-style:italic">//Create the model class
+</span><span style="color:#408080;font-style:italic"></span><span style="color:#008000;font-weight:bold">const</span> ModelClass <span style="color:#666">=</span> mongoose.model(<span style="color:#ba2121">&#39;user&#39;</span>, userSchema)
+
+module.exports <span style="color:#666">=</span> ModelClass;
+</code></pre></div>
+<p>When you attempt to save a password, bcrypt generates a salt — randomly generated string of characters. By combining the salt with the plain password, bcrypt outputs a hashed password comprised by the salt and hashed password itself. This will be  important later when we will talk about signing in, when bcrypt extracts the salt from previously hashed password, combines it with the currently sign in password and compares the resulting hashes to check if they are equal.</p>
+
+<h5 id="json-web-token">JSON Web Token</h5>
+
+<p>When someone is signing up or in and the credentials are good, we need to give them back an identifying piece of information(a token) to include it on all future requests. The flow would look like this:
+— When signing in/up, give a token in exchange for an id
+<em>User ID + Our secret string = JWT</em>
+— When the user will make an authenticated request later, the user should include their JWT
+<em>JWT + our secret string = User ID</em></p>
+
+<p>The secret string is used for security reasons so just us can decrypt the tokens. We should add it to <code>.gitignore</code> and make sure we don’t share it.</p>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4">~/ss-auth/ npm i -S jwt-simple
+~/ss-auth/ touch config.js</pre></div><div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js">module.exports <span style="color:#666">=</span> {
+  secret<span style="color:#666">:</span> <span style="color:#ba2121">&#39;392ufnjawd&#39;</span>
+}
+</code></pre></div>
+<p>Don’t forget to add <code>config.js</code> to <code>.gitignore</code>.
+In <code>authentication.js</code> we will add a function to generate a token and encode with our secret.</p>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#008000;font-weight:bold">const</span> jwt <span style="color:#666">=</span> require(<span style="color:#ba2121">&#39;jwt-simple&#39;</span>);
+<span style="color:#008000;font-weight:bold">const</span> User <span style="color:#666">=</span> require(<span style="color:#ba2121">&#39;../models/user&#39;</span>);
+<span style="color:#008000;font-weight:bold">const</span> config <span style="color:#666">=</span> require(<span style="color:#ba2121">&#39;../config&#39;</span>);
+
+<span style="color:#008000;font-weight:bold">function</span> tokenUser(user) {
+  <span style="color:#008000;font-weight:bold">const</span> timestamp <span style="color:#666">=</span> <span style="color:#008000;font-weight:bold">new</span> <span style="color:#008000">Date</span>().getTime();
+  <span style="color:#408080;font-style:italic">//the subject of this token will  be user id
+</span><span style="color:#408080;font-style:italic"></span>  <span style="color:#408080;font-style:italic">//the issued at time - the time it was generated
+</span><span style="color:#408080;font-style:italic"></span>  <span style="color:#408080;font-style:italic">//sub and iat are jwt conventions
+</span><span style="color:#408080;font-style:italic"></span>  <span style="color:#408080;font-style:italic">//user.id is the id auto-generated by the db
+</span><span style="color:#408080;font-style:italic"></span>  <span style="color:#008000;font-weight:bold">return</span> jwt.encode({ sub<span style="color:#666">:</span> user.id, iat<span style="color:#666">:</span> timestamp }, config.secret)
+}
+
+exports.signup <span style="color:#666">=</span> <span style="color:#008000;font-weight:bold">function</span>(req, res, next) {
+  <span style="color:#008000;font-weight:bold">const</span> email <span style="color:#666">=</span> req.body.email;
+  <span style="color:#008000;font-weight:bold">const</span> password <span style="color:#666">=</span> req.body.password;
+  <span style="color:#008000;font-weight:bold">if</span>(<span style="color:#666">!</span>email <span style="color:#666">||</span> <span style="color:#666">!</span>password) {
+    <span style="color:#008000;font-weight:bold">return</span> res.status(<span style="color:#666">422</span>).send({ error<span style="color:#666">:</span> <span style="color:#ba2121">&#39;Email and password are required!&#39;</span>})
+  }
+  User.findOne({ email }, <span style="color:#008000;font-weight:bold">function</span>(err, existingUser){
+    <span style="color:#008000;font-weight:bold">if</span>(err) <span style="color:#008000;font-weight:bold">return</span> next(err);
+    <span style="color:#008000;font-weight:bold">if</span>(existingUser) <span style="color:#008000;font-weight:bold">return</span> res.status(<span style="color:#666">422</span>).send({ error<span style="color:#666">:</span> <span style="color:#ba2121">&#39;Email is in use&#39;</span> });
+
+  <span style="color:#008000;font-weight:bold">const</span> user <span style="color:#666">=</span> <span style="color:#008000;font-weight:bold">new</span> User({
+    email,
+    password
+  });
+  user.save(<span style="color:#008000;font-weight:bold">function</span>(err) {
+    <span style="color:#008000;font-weight:bold">if</span>(err) {<span style="color:#008000;font-weight:bold">return</span> next(err);}
+    res.json({ token<span style="color:#666">:</span> tokenUser(user) })
+  });
+  })
+}
+</code></pre></div>
+<p>Lets digest what is happening here. Someone attempts to signs up with a username and password. First we check for errors and existing users, if we are ok —  we generate a new entry and send back the token for user to use in the future for authenticated requests. To generate a token we make use of the <code>encode</code> of the <code>jwt-simple</code> library, that takes as parameters an object containing the user id and the timestamp and the other parameter is our secret string. The method is called only when the user is  successfully saved in our database, so we have access to the _id generated by Mongo to generate the token.
+So far, we are handling just the sign up for users to receive an authentication token. Now, we will have to handle how our users will access protected routes. Also, we want to centralize this logic so the checking takes place once for all controllers.   For this will use <code>PassportJs</code>. Passport makes use of so-called strategies — methods/plugins for authenticating a user. <code>passport-jwt</code> is a strategy to authenticate users by using JSON web tokens. <code>passport-local</code> strategy makes use of username and password to verify user credentials. There are lots of other strategies out there(like facebook login, google login, etc), we will cover just these two here.</p>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4">~/ss-auth/ npm i -S passport passport-jwt
+~/ss-auth/ mkdir services &amp;&amp; $_ &amp;&amp; touch passport.js</pre></div>
+<p>passport.js</p>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#008000;font-weight:bold">const</span> passport <span style="color:#666">=</span> require(<span style="color:#ba2121">&#39;passport&#39;</span>);
+<span style="color:#008000;font-weight:bold">const</span> JwtStrategy <span style="color:#666">=</span> require(<span style="color:#ba2121">&#39;passport-jwt&#39;</span>).Strategy;
+<span style="color:#008000;font-weight:bold">const</span> Extractjwt <span style="color:#666">=</span> require(<span style="color:#ba2121">&#39;passport-jwt&#39;</span>).ExtractJwt;
+<span style="color:#008000;font-weight:bold">const</span> User <span style="color:#666">=</span> require(<span style="color:#ba2121">&#39;../models/user&#39;</span>);
+<span style="color:#008000;font-weight:bold">const</span> config <span style="color:#666">=</span> require(<span style="color:#ba2121">&#39;../config&#39;</span>);
+
+<span style="color:#408080;font-style:italic">//set options for JWT strategy
+</span><span style="color:#408080;font-style:italic"></span><span style="color:#008000;font-weight:bold">const</span> jwtOptions <span style="color:#666">=</span> {
+  jwtFromRequest<span style="color:#666">:</span> Extractjwt.fromHeader(<span style="color:#ba2121">&#39;authorization&#39;</span>),
+  secretOrKey<span style="color:#666">:</span> config.secret
+};
+
+<span style="color:#408080;font-style:italic">//create jwt strategy
+</span><span style="color:#408080;font-style:italic"></span><span style="color:#008000;font-weight:bold">const</span> jwtLogin <span style="color:#666">=</span> <span style="color:#008000;font-weight:bold">new</span> JwtStrategy(jwtOptions, <span style="color:#008000;font-weight:bold">function</span> (payload, done) {
+  <span style="color:#408080;font-style:italic">//payload is the encoded user.id and timestamp from authentication.js
+</span><span style="color:#408080;font-style:italic"></span>  User.findById(payload.sub, <span style="color:#008000;font-weight:bold">function</span>(err, user) {
+    <span style="color:#008000;font-weight:bold">if</span> (err) { <span style="color:#008000;font-weight:bold">return</span> done(err, <span style="color:#008000;font-weight:bold">false</span>); }
+    <span style="color:#008000;font-weight:bold">if</span> (user) { done(<span style="color:#008000;font-weight:bold">null</span>, user); }
+    done(<span style="color:#008000;font-weight:bold">null</span>, <span style="color:#008000;font-weight:bold">false</span>);
+  });
+});
+
+<span style="color:#408080;font-style:italic">//instruct passport to use the strategies
+</span><span style="color:#408080;font-style:italic"></span>passport.use(jwtLogin);
+</code></pre></div>
+<p>We set up a new strategy — <code>jwtLogin</code> that takes as parameters an options object and a callback function that will be called whenever a request to a protected route is made. Once the function gets called we attempt to find a user ID in our database that matches the id previously assigned to the user when signing up (check the <code>tokenUser</code> function in <code>authethation.js</code> where we used the id, timestamp and the secret to encode the token). The <code>payload</code> parameter of the callback function is the object used previously to encode the token with our secret key. You might be wondering how the payload gets access to our encoded token. That is why we feed the strategy the <code>jwtOption</code> object. When the strategy runs, we tell it to extract the token from the specified header — <code>authorization</code>  and use our secret to decode the token.
+Going further, we attempt to find a user with the id from the payload and call the <code>done</code> callback with the result. To make use of the strategy we call <code>passport.use</code> with it.</p>
+
+<p>The strategy being set up, now we have to intercept the request before it hits our router. We need to edit our <code>router.js</code> —</p>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#008000;font-weight:bold">const</span> passport <span style="color:#666">=</span> require(<span style="color:#ba2121">&#39;passport&#39;</span>);
+<span style="color:#008000;font-weight:bold">const</span> signUp <span style="color:#666">=</span> require(<span style="color:#ba2121">&#39;./controllers/authentication&#39;</span>).signup;
+<span style="color:#008000;font-weight:bold">const</span> passportService <span style="color:#666">=</span> require(<span style="color:#ba2121">&#39;./services/passport&#39;</span>);
+
+<span style="color:#008000;font-weight:bold">const</span> requireAuth <span style="color:#666">=</span> passport.authenticate(<span style="color:#ba2121">&#39;jwt&#39;</span>, {session<span style="color:#666">:</span> <span style="color:#008000;font-weight:bold">false</span>});
+
+module.exports <span style="color:#666">=</span> <span style="color:#008000;font-weight:bold">function</span> (app) {
+  app.get(<span style="color:#ba2121">&#39;/&#39;</span>, requireAuth, <span style="color:#008000;font-weight:bold">function</span>(req,res) {
+    res.send({hi<span style="color:#666">:</span> <span style="color:#ba2121">&#39;there&#39;</span>})
+  })
+  app.post(<span style="color:#ba2121">&#39;/signup&#39;</span>, signUp);
+}
+</code></pre></div>
+<p>In here we will specify on which route we want to use our strategy. Let’s say for us to access the root of our page we need to be authenticated. The second param of the get method will be the <code>requireAuth</code> helper that acts like a middleware that intercepts our request and if successful — runs the callback function. The helper is just a <code>authenticate</code> call on the <code>passport</code> object, specifying that we want to use the jwt strategy and don’t want a cookie based session for our users.</p>
+
+<p>Ok, lets test what we’ve done so far. Fire up Postman and make a <code>get</code>  request to <code>/</code> on your server. We will get <code>Unauthorized</code> in the response body. That is because we didn’t supply a token when attempted to access the route. Lets sign up for an account, that way we will receive an encoded token from the server. Make a <code>post</code> request to <code>/signup</code> with an email and a password. If successful — you will see a token string in the response body. Copy it. Now make a <code>get</code> request again, but this time paste the token as value for the <code>authorization</code> header. If successful you will receive  <code>{&quot;hi&quot;: “there”}</code> in the response. This is good and all, but the end users aren’t aware of any token being involved. Our means of authentication will be the email and the password. That means that on a log in attempt we will get an email and a password and if we confirm them — we give the user a token. For this we will make use of <code>passport-local</code> strategy.</p>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4">~/ss-auth/ npm i -S passport passport-local</pre></div>
+<p>Create a local strategy in <code>passport.js</code> —</p>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#008000;font-weight:bold">const</span> passport <span style="color:#666">=</span> require(<span style="color:#ba2121">&#39;passport&#39;</span>);
+<span style="color:#008000;font-weight:bold">const</span> JwtStrategy <span style="color:#666">=</span> require(<span style="color:#ba2121">&#39;passport-jwt&#39;</span>).Strategy;
+<span style="color:#008000;font-weight:bold">const</span> LocalStrategy require(<span style="color:#ba2121">&#39;passport-local&#39;</span>);
+<span style="color:#008000;font-weight:bold">const</span> Extractjwt <span style="color:#666">=</span> require(<span style="color:#ba2121">&#39;passport-jwt&#39;</span>).ExtractJwt;
+<span style="color:#008000;font-weight:bold">const</span> User <span style="color:#666">=</span> require(<span style="color:#ba2121">&#39;../models/user&#39;</span>);
+<span style="color:#008000;font-weight:bold">const</span> config <span style="color:#666">=</span> require(<span style="color:#ba2121">&#39;../config&#39;</span>);
+
+<span style="color:#408080;font-style:italic">//create local strategy
+</span><span style="color:#408080;font-style:italic"></span><span style="color:#008000;font-weight:bold">const</span> localOptions <span style="color:#666">=</span> { usernameField<span style="color:#666">:</span> <span style="color:#ba2121">&#39;email&#39;</span> };
+<span style="color:#008000;font-weight:bold">const</span> localLogin <span style="color:#666">=</span> <span style="color:#008000;font-weight:bold">new</span> LocalStrategy(localOptions, <span style="color:#008000;font-weight:bold">function</span>(email, password, done) {
+  <span style="color:#408080;font-style:italic">//verify the username and password, call done with the user
+</span><span style="color:#408080;font-style:italic"></span>  User.findOne({email}, <span style="color:#008000;font-weight:bold">function</span>(err, user) {
+    <span style="color:#008000;font-weight:bold">if</span> (err) { <span style="color:#008000;font-weight:bold">return</span> done(err); }
+    <span style="color:#008000;font-weight:bold">if</span> (<span style="color:#666">!</span>user) { <span style="color:#008000;font-weight:bold">return</span> done(<span style="color:#008000;font-weight:bold">null</span>, <span style="color:#008000;font-weight:bold">false</span>); }
+    <span style="color:#408080;font-style:italic">//is &#39;password&#39; equal to the hashed stored password?
+</span><span style="color:#408080;font-style:italic"></span>  })
+})
+
+<span style="color:#408080;font-style:italic">//set options for JWT strategy
+</span><span style="color:#408080;font-style:italic"></span><span style="color:#008000;font-weight:bold">const</span> jwtOptions <span style="color:#666">=</span> {
+  jwtFromRequest<span style="color:#666">:</span> Extractjwt.fromHeader(<span style="color:#ba2121">&#39;authorization&#39;</span>),
+  secretOrKey<span style="color:#666">:</span> config.secret
+};
+
+<span style="color:#408080;font-style:italic">//create jwt strategy
+</span><span style="color:#408080;font-style:italic"></span><span style="color:#008000;font-weight:bold">const</span> jwtLogin <span style="color:#666">=</span> <span style="color:#008000;font-weight:bold">new</span> JwtStrategy(jwtOptions, <span style="color:#008000;font-weight:bold">function</span> (payload, done) {
+  <span style="color:#408080;font-style:italic">//payload is the decoded jwt token (encoded in authentication.js)
+</span><span style="color:#408080;font-style:italic"></span>  User.findById(payload.sub, <span style="color:#008000;font-weight:bold">function</span>(err, user) {
+    <span style="color:#008000;font-weight:bold">if</span> (err) { <span style="color:#008000;font-weight:bold">return</span> done(err, <span style="color:#008000;font-weight:bold">false</span>); }
+    <span style="color:#008000;font-weight:bold">if</span> (user) { done(<span style="color:#008000;font-weight:bold">null</span>, user); }
+    done(<span style="color:#008000;font-weight:bold">null</span>, <span style="color:#008000;font-weight:bold">false</span>);
+  });
+});
+
+<span style="color:#408080;font-style:italic">//instruct passport to use the strategies
+</span><span style="color:#408080;font-style:italic"></span>passport.use(jwtLogin);
+</code></pre></div>
+<p>Local strategy will look for a <code>username</code> field by default so we have to specify an option to tell it that our usernameField is the email.
+  Ok, so why do we need two strategies for authentication? The jwt strategy is verifying if the user sends a valid token(eg — stored in localStorage) every time she makes a request on one of our protected routes. Remember, users don’t know what is happening behind the curtains and how the information flows, they interact with the UI. In order to give them a token for future authenticated requests we need to log them in first using email and password — here comes in play the local strategy.
+  In the new local strategy instance we will have to verify the email and password provided by the user. We will search the database for the email and if we find the user — will have to compare the passwords. But here is the caveat, we have a plain password provided by the user at log in and we have to compare it with our hashed password(check <code>user.js</code>) stored in the database. Here is how the process works:
+  1. Bcrypt takes the plain password and encrypts it using our salt.
+  2. The resulting hashed password it then compared with that stored in our database. If they match — the user can receive a token from the server.</p>
+
+<p>Lets go edit <code>user.js</code> and add <code>comparePasswords</code> method to the <code>methods</code> object on our <code>userSchema</code>, so all userObjects will have access to the <code>comparePasswords</code> method in the future.</p>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#008000;font-weight:bold">const</span> mongoose <span style="color:#666">=</span> require(<span style="color:#ba2121">&#39;mongoose&#39;</span>);
+<span style="color:#008000;font-weight:bold">const</span> Schema <span style="color:#666">=</span> mongoose.Schema;
+<span style="color:#008000;font-weight:bold">const</span> bcrypt <span style="color:#666">=</span> require(<span style="color:#ba2121">&#39;bcrypt-nodejs&#39;</span>);
+
+<span style="color:#408080;font-style:italic">//Define our model
+</span><span style="color:#408080;font-style:italic"></span><span style="color:#008000;font-weight:bold">const</span> userSchema <span style="color:#666">=</span> <span style="color:#008000;font-weight:bold">new</span> Schema({
+  email<span style="color:#666">:</span> {
+    type<span style="color:#666">:</span> <span style="color:#008000">String</span>,
+    unique<span style="color:#666">:</span> <span style="color:#008000;font-weight:bold">true</span>,
+    lowercase<span style="color:#666">:</span> <span style="color:#008000;font-weight:bold">true</span>
+  },
+  password<span style="color:#666">:</span> <span style="color:#008000">String</span>
+});
+<span style="color:#408080;font-style:italic">// On save - encrypt password
+</span><span style="color:#408080;font-style:italic"></span>userSchema.pre(<span style="color:#ba2121">&#39;save&#39;</span>, <span style="color:#008000;font-weight:bold">function</span>(next) {
+  <span style="color:#408080;font-style:italic">//get access to the user model
+</span><span style="color:#408080;font-style:italic"></span>  <span style="color:#008000;font-weight:bold">const</span> user <span style="color:#666">=</span> <span style="color:#008000;font-weight:bold">this</span>;
+
+  <span style="color:#408080;font-style:italic">//generate a salt the run cb
+</span><span style="color:#408080;font-style:italic"></span>  bcrypt.genSalt(<span style="color:#666">10</span>, <span style="color:#008000;font-weight:bold">function</span>(err, salt){
+    <span style="color:#008000;font-weight:bold">if</span>(err) <span style="color:#008000;font-weight:bold">return</span> next(err);
+
+  <span style="color:#408080;font-style:italic">//hash(encrypt) the password using salt
+</span><span style="color:#408080;font-style:italic"></span>  bcrypt.hash(user.password, salt, <span style="color:#008000;font-weight:bold">null</span>, <span style="color:#008000;font-weight:bold">function</span> (err, hash) {
+    <span style="color:#008000;font-weight:bold">if</span>(err) <span style="color:#008000;font-weight:bold">return</span> next(err);
+
+    <span style="color:#408080;font-style:italic">//overwrite plain text password with encrypted password
+</span><span style="color:#408080;font-style:italic"></span>    user.password <span style="color:#666">=</span> hash;
+    <span style="color:#408080;font-style:italic">//go ahead and save the model
+</span><span style="color:#408080;font-style:italic"></span>    next();
+  })
+  });
+});
+
+userSchema.methods.comparePasswords <span style="color:#666">=</span> <span style="color:#008000;font-weight:bold">function</span>(candidatePassword, callback) {
+  bcrypt.compare(candidatePassword, <span style="color:#008000;font-weight:bold">this</span>.password, <span style="color:#008000;font-weight:bold">function</span> (err, isMatch) {
+    <span style="color:#008000;font-weight:bold">if</span> (err) { <span style="color:#008000;font-weight:bold">return</span> callback(err) };
+    callback(<span style="color:#008000;font-weight:bold">null</span>, isMatch);
+  });
+}
+
+<span style="color:#408080;font-style:italic">//Create the model class
+</span><span style="color:#408080;font-style:italic"></span><span style="color:#008000;font-weight:bold">const</span> ModelClass <span style="color:#666">=</span> mongoose.model(<span style="color:#ba2121">&#39;user&#39;</span>, userSchema)
+
+module.exports <span style="color:#666">=</span> ModelClass;
+</code></pre></div>
+<p>Bcrypt will receive the user plain password (<code>candidatePassword</code>), <code>compare</code> it with hashed password from the matched email database entry(<code>this.password</code>) and call the callback with a Boolean isMatch. Now lets go back to <code>passport.js</code> and update the local strategy —</p>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#008000;font-weight:bold">const</span> passport <span style="color:#666">=</span> require(<span style="color:#ba2121">&#39;passport&#39;</span>);
+<span style="color:#008000;font-weight:bold">const</span> JwtStrategy <span style="color:#666">=</span> require(<span style="color:#ba2121">&#39;passport-jwt&#39;</span>).Strategy;
+<span style="color:#008000;font-weight:bold">const</span> LocalStrategy require(<span style="color:#ba2121">&#39;passport-local&#39;</span>);
+<span style="color:#008000;font-weight:bold">const</span> Extractjwt <span style="color:#666">=</span> require(<span style="color:#ba2121">&#39;passport-jwt&#39;</span>).ExtractJwt;
+<span style="color:#008000;font-weight:bold">const</span> User <span style="color:#666">=</span> require(<span style="color:#ba2121">&#39;../models/user&#39;</span>);
+<span style="color:#008000;font-weight:bold">const</span> config <span style="color:#666">=</span> require(<span style="color:#ba2121">&#39;../config&#39;</span>);
+
+<span style="color:#408080;font-style:italic">//set options for JWT strategy
+</span><span style="color:#408080;font-style:italic"></span><span style="color:#008000;font-weight:bold">const</span> jwtOptions <span style="color:#666">=</span> {
+  jwtFromRequest<span style="color:#666">:</span> Extractjwt.fromHeader(<span style="color:#ba2121">&#39;authorization&#39;</span>),
+  secretOrKey<span style="color:#666">:</span> config.secret
+};
+
+<span style="color:#408080;font-style:italic">//create local strategy
+</span><span style="color:#408080;font-style:italic"></span><span style="color:#008000;font-weight:bold">const</span> localOptions <span style="color:#666">=</span> { usernameField<span style="color:#666">:</span> <span style="color:#ba2121">&#39;email&#39;</span> };
+<span style="color:#008000;font-weight:bold">const</span> localLogin <span style="color:#666">=</span> <span style="color:#008000;font-weight:bold">new</span> LocalStrategy(localOptions, <span style="color:#008000;font-weight:bold">function</span>(email, password, done) {
+  <span style="color:#408080;font-style:italic">//verify the username and password, call done with the user
+</span><span style="color:#408080;font-style:italic"></span>  User.findOne({email}, <span style="color:#008000;font-weight:bold">function</span>(err, user) {
+    <span style="color:#008000;font-weight:bold">if</span> (err) { <span style="color:#008000;font-weight:bold">return</span> done(err); }
+    <span style="color:#008000;font-weight:bold">if</span> (<span style="color:#666">!</span>user) { <span style="color:#008000;font-weight:bold">return</span> done(<span style="color:#008000;font-weight:bold">null</span>, <span style="color:#008000;font-weight:bold">false</span>); }
+    <span style="color:#408080;font-style:italic">//is &#39;password&#39; equal to the hashed stored password?
+</span><span style="color:#408080;font-style:italic"></span>    user.comparePasswords(password, <span style="color:#008000;font-weight:bold">function</span>(err, isMatch){
+      <span style="color:#008000;font-weight:bold">if</span> (err) {<span style="color:#008000;font-weight:bold">return</span> done(err);}
+      <span style="color:#008000;font-weight:bold">if</span> (<span style="color:#666">!</span>isMatch) {<span style="color:#008000;font-weight:bold">return</span> done(<span style="color:#008000;font-weight:bold">null</span>, <span style="color:#008000;font-weight:bold">false</span>);}
+      <span style="color:#008000;font-weight:bold">return</span> done(<span style="color:#008000;font-weight:bold">null</span>, user);
+    })
+  })
+})
+
+<span style="color:#408080;font-style:italic">//create jwt strategy
+</span><span style="color:#408080;font-style:italic"></span><span style="color:#008000;font-weight:bold">const</span> jwtLogin <span style="color:#666">=</span> <span style="color:#008000;font-weight:bold">new</span> JwtStrategy(jwtOptions, <span style="color:#008000;font-weight:bold">function</span> (payload, done) {
+  <span style="color:#408080;font-style:italic">//payload is the decoded jwt token (encoded in authentication.js)
+</span><span style="color:#408080;font-style:italic"></span>  User.findById(payload.sub, <span style="color:#008000;font-weight:bold">function</span>(err, user) {
+    <span style="color:#008000;font-weight:bold">if</span> (err) { <span style="color:#008000;font-weight:bold">return</span> done(err, <span style="color:#008000;font-weight:bold">false</span>); }
+    <span style="color:#008000;font-weight:bold">if</span> (user) { done(<span style="color:#008000;font-weight:bold">null</span>, user); }
+    done(<span style="color:#008000;font-weight:bold">null</span>, <span style="color:#008000;font-weight:bold">false</span>);
+  });
+});
+
+<span style="color:#408080;font-style:italic">//instruct passport to use the strategies
+</span><span style="color:#408080;font-style:italic"></span>passport.use(jwtLogin);
+passport.use(localLogin);
+</code></pre></div>
+<p>To make use of the strategy lets tell passport to use it. Next, add a <code>/login</code> route to <code>router.js</code> and instruct it to use the local strategy before accessing the <code>Authentication.login</code> route</p>
+
+<p><code>router.js</code></p>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#008000;font-weight:bold">const</span> passport <span style="color:#666">=</span> require(<span style="color:#ba2121">&#39;passport&#39;</span>);
+<span style="color:#008000;font-weight:bold">const</span> Authentication <span style="color:#666">=</span> require(<span style="color:#ba2121">&#39;./controllers/authentication&#39;</span>);
+<span style="color:#008000;font-weight:bold">const</span> passportService <span style="color:#666">=</span> require(<span style="color:#ba2121">&#39;./services/passport&#39;</span>);
+
+<span style="color:#008000;font-weight:bold">const</span> requireAuth <span style="color:#666">=</span> passport.authenticate(<span style="color:#ba2121">&#39;jwt&#39;</span>, {session<span style="color:#666">:</span> <span style="color:#008000;font-weight:bold">false</span>});
+cosnt requireLogin <span style="color:#666">=</span> passport.authenticate(<span style="color:#ba2121">&#39;loca&#39;</span>, {session<span style="color:#666">:</span> <span style="color:#008000;font-weight:bold">false</span>});
+
+module.exports <span style="color:#666">=</span> <span style="color:#008000;font-weight:bold">function</span> (app) {
+  app.get(<span style="color:#ba2121">&#39;/&#39;</span>, requireAuth, <span style="color:#008000;font-weight:bold">function</span>(req,res) {
+    res.send({ hi<span style="color:#666">:</span> <span style="color:#ba2121">&#39;there&#39;</span> })
+  });
+  app.post(<span style="color:#ba2121">&#39;/login&#39;</span>, requireLogin, Authentication.login);
+  app.post(<span style="color:#ba2121">&#39;/signup&#39;</span>, Authentication.signup);
+}
+</code></pre></div>
+<p>Update <code>authentication.js</code> with the <code>login</code> method. We gain access to the user object in here because <code>localLogin</code> method in   <code>passport.js</code> returns the user if the match is successful and conveniently for us attaches it to the request object.</p>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#008000;font-weight:bold">const</span> jwt <span style="color:#666">=</span> require(<span style="color:#ba2121">&#39;jwt-simple&#39;</span>);
+<span style="color:#008000;font-weight:bold">const</span> User <span style="color:#666">=</span> require(<span style="color:#ba2121">&#39;../models/user&#39;</span>);
+<span style="color:#008000;font-weight:bold">const</span> config <span style="color:#666">=</span> require(<span style="color:#ba2121">&#39;../config&#39;</span>);
+
+<span style="color:#008000;font-weight:bold">function</span> tokenUser(user) {
+  <span style="color:#008000;font-weight:bold">const</span> timestamp <span style="color:#666">=</span> <span style="color:#008000;font-weight:bold">new</span> <span style="color:#008000">Date</span>().getTime();
+  <span style="color:#408080;font-style:italic">//the sub(ject) of this token will  be user id
+</span><span style="color:#408080;font-style:italic"></span>  <span style="color:#408080;font-style:italic">//the issued at time - the time it was generated
+</span><span style="color:#408080;font-style:italic"></span>  <span style="color:#408080;font-style:italic">//sub and iat are jwt conventions
+</span><span style="color:#408080;font-style:italic"></span>  <span style="color:#408080;font-style:italic">//user.id is the id auto-generated by the db
+</span><span style="color:#408080;font-style:italic"></span>  <span style="color:#008000;font-weight:bold">return</span> jwt.encode({ sub<span style="color:#666">:</span> user.id, iat<span style="color:#666">:</span> timestamp }, config.secret)
+}
+
+exports.login <span style="color:#666">=</span> <span style="color:#008000;font-weight:bold">function</span>(req, res, next) {
+  <span style="color:#408080;font-style:italic">//user has the email and password already authe&#39;d
+</span><span style="color:#408080;font-style:italic"></span>  res.send({ token<span style="color:#666">:</span> tokenUser(req.user) });
+}
+
+exports.signup <span style="color:#666">=</span> <span style="color:#008000;font-weight:bold">function</span>(req, res, next) {
+  <span style="color:#008000;font-weight:bold">const</span> email <span style="color:#666">=</span> req.body.email;
+  <span style="color:#008000;font-weight:bold">const</span> password <span style="color:#666">=</span> req.body.password;
+  <span style="color:#008000;font-weight:bold">if</span>(<span style="color:#666">!</span>email <span style="color:#666">||</span> <span style="color:#666">!</span>password) {
+    <span style="color:#008000;font-weight:bold">return</span> res.status(<span style="color:#666">422</span>).send({ error<span style="color:#666">:</span> <span style="color:#ba2121">&#39;Email and password are required!&#39;</span>})
+  }
+  User.findOne({ email }, <span style="color:#008000;font-weight:bold">function</span>(err, existingUser){
+    <span style="color:#008000;font-weight:bold">if</span>(err) <span style="color:#008000;font-weight:bold">return</span> next(err);
+    <span style="color:#008000;font-weight:bold">if</span>(existingUser) <span style="color:#008000;font-weight:bold">return</span> res.status(<span style="color:#666">422</span>).send({ error<span style="color:#666">:</span> <span style="color:#ba2121">&#39;Email is in use&#39;</span> });
+
+    <span style="color:#008000;font-weight:bold">const</span> user <span style="color:#666">=</span> <span style="color:#008000;font-weight:bold">new</span> User({
+      email,
+      password
+    });
+    user.save(<span style="color:#008000;font-weight:bold">function</span>(err) {
+      <span style="color:#008000;font-weight:bold">if</span>(err) {<span style="color:#008000;font-weight:bold">return</span> next(err);}
+      res.json({ user , token<span style="color:#666">:</span> tokenUser(user) })
+    });
+  })
+}
+</code></pre></div>
+<p>Go ahead and test with Postman all what we’ve done so far. We have now a fully functioning authentication API which can be used with any front-end. We’ll tackle this in another post.</p>
+
+            </div>
+        </article>
+    </div>
+            </body>
+</html>
+</div>
