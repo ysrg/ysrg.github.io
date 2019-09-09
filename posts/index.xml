@@ -44,7 +44,7 @@ alert(x); const x = 1  Most people would assume one of the two: either the brows
     <item>
       <title>Server—side Authentication in NodeJS</title>
       <link>https://ysrg.github.io/posts/ss-auth-node/</link>
-      <pubDate>Thu, 18 Jul 2019 05:42:10 +0300</pubDate>
+      <pubDate>Wed, 18 Jul 2018 05:42:10 +0300</pubDate>
       
       <guid>https://ysrg.github.io/posts/ss-auth-node/</guid>
       <description>Let us quickly put together a server app for our project:
